@@ -31,6 +31,25 @@ def compile_latex(latex_file, working_dir, output_dir):
     except FileNotFoundError:
         print("Error: pdflatex not found. Please ensure LaTeX is installed and in your PATH.")
 
+def escape_latex(s):
+    if not isinstance(s, str):
+        return s
+    replace = {
+        '&': r'\&',
+        '%': r'\%',
+        '$': r'\$',
+        '#': r'\#',
+        '_': r'\_',
+        '{': r'\{',
+        '}': r'\}',
+        '~': r'\textasciitilde{}',
+        '^': r'\textasciicircum{}',
+        '\\': r'\textbackslash{}',
+    }
+    for old, new in replace.items():
+        s = s.replace(old, new)
+    return s
+
 def load_json(path):
     try:
         with open(path, encoding='utf-8') as f:
@@ -47,27 +66,26 @@ def render_template(template_name, context):
         print(f"Error rendering template: {template_name}\n{e}")
         exit(1)
 
-if __name__ == "__main__":
-    # Load your JSON data
-    contact = load_json(os.path.join(DATA_DIR, 'contact.json'))
-    skills = load_json(os.path.join(DATA_DIR, 'skills.json'))
-    projects = load_json(os.path.join(DATA_DIR, 'projects.json'))
-    experience = load_json(os.path.join(DATA_DIR, 'experience.json'))
-    education = load_json(os.path.join(DATA_DIR, 'education.json'))
-
-    # Assemble LaTeX source
+def render_resume(contact, skills, projects, experience, education):
+    """Render the entire LaTeX resume as a string."""
     try:
         with open(os.path.join(TEMPLATE_DIR, 'header.tex'), encoding='utf-8') as f:
             tex = f.read()
-        tex += '\n\\begin{document}\n\\begin{adjustbox}{minipage=\\textwidth,scale only axis=true,center,max height=\\textheight}\n'
+        # Use only safe adjustbox options (no scale only axis=true)
+        tex += '\n\\begin{document}\n\\begin{adjustbox}{minipage=\\textwidth,center,max height=\\textheight}\n'
 
         # Contact info block
-        tex += f"""\\namesection{{{contact['name']}}}{{%
-    {contact['phone']} \\\\
-    \\href{{mailto:{contact['email']}}}{{{contact['email']}}} \\\\
-    LinkedIn: \\href{{{contact['linkedin']}}}{{{contact['linkedin'].replace('https://','')}}} \\\\
-    GitHub: \\href{{{contact['github']}}}{{{contact['github'].replace('https://','')}}}
-    }}\n"""
+        tex += f"""\\namesection{{{escape_latex(contact['name'])}}}{{%
+        {escape_latex(contact['phone'])} \\\\
+        \\href{{mailto:{escape_latex(contact['email'])}}}{{{escape_latex(contact['email'])}}} \\\\
+        LinkedIn: \\href{{{escape_latex(contact['linkedin'])}}}{{{escape_latex(contact['linkedin'].replace('https://',''))}}} \\\\
+        """
+        if "githubs" in contact:
+            for gh in contact["githubs"]:
+                tex += f'{escape_latex(gh["label"])} GitHub: \\href{{{escape_latex(gh["url"])}}}{{{escape_latex(gh["url"].replace("https://", ""))}}} \\\\\n'
+        elif "github" in contact:
+            tex += f'GitHub: \\href{{{escape_latex(contact["github"])}}}{{{escape_latex(contact["github"].replace("https://", ""))}}}\n'
+        tex += "}\n"
 
         tex += render_template('skills.tex.j2', {'skills': skills})
         tex += render_template('projects.tex.j2', {'projects': projects})
@@ -76,10 +94,21 @@ if __name__ == "__main__":
 
         with open(os.path.join(TEMPLATE_DIR, 'footer.tex'), encoding='utf-8') as f:
             tex += f.read()
-
+        return tex
     except Exception as e:
         print(f"Error assembling LaTeX document:\n{e}")
         exit(1)
+
+if __name__ == "__main__":
+    # Load your JSON data
+    contact = load_json(os.path.join(DATA_DIR, 'contact.json'))
+    skills = load_json(os.path.join(DATA_DIR, 'skills.json'))
+    projects = load_json(os.path.join(DATA_DIR, 'projects.json'))
+    experience = load_json(os.path.join(DATA_DIR, 'experience.json'))
+    education = load_json(os.path.join(DATA_DIR, 'education.json'))
+
+    # Render the resume
+    tex = render_resume(contact, skills, projects, experience, education)
 
     # Save to main.tex
     with open(MAIN_TEX_PATH, 'w', encoding='utf-8') as f:
