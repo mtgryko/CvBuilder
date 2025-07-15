@@ -1,0 +1,77 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[left=0.8in,top=0.7in,right=0.8in,bottom=0.7in]{geometry}
+\usepackage[parfill]{parskip}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, urlcolor=blue}
+\pagestyle{empty}
+\usepackage[export]{adjustbox}
+
+% Section macros
+\newcommand{\namesection}[2]{
+    \begin{center}
+        {\huge \bfseries #1}\\
+        \vspace{6pt}
+        \small #2
+    \end{center}
+    \vspace{12pt}
+}
+
+\newenvironment{sectionheader}[1]{
+    \vspace{10pt}
+    \noindent\textbf{\uppercase{#1}}\vspace{2pt}\\
+    \hrule height 1pt \vspace{4pt}
+    \begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=2pt]
+}{
+    \end{itemize}
+}
+
+\newenvironment{sectionheader_nobullet}[1]{
+    \vspace{10pt}
+    \noindent\textbf{\uppercase{#1}}\vspace{2pt}\\
+    \hrule height 1pt \vspace{4pt}
+    \begin{itemize}[leftmargin=0em, label={}, itemsep=2pt, topsep=2pt]
+}{
+    \end{itemize}
+}
+
+\begin{document}
+\begin{adjustbox}{minipage=\textwidth,scale only axis=true,center,max height=\textheight}
+\namesection{Jane Doe}{%
+    (+48) 123-456-789 \\
+    \href{mailto:jane.doe@email.com}{jane.doe@email.com} \\
+    LinkedIn: \href{https://linkedin.com/in/janedoe}{linkedin.com/in/janedoe} \\
+    GitHub: \href{https://github.com/janedoe}{github.com/janedoe}
+    }
+\begin{sectionheader_nobullet}{Skills}
+  \item \textbf{ Programming Languages }: Python, MATLAB, Java
+  \item \textbf{ Software & Tools }: SolidWorks, Adobe Illustrator, PowerPoint
+  \item \textbf{ Interests }: Data Science, Analytics, Robotics
+  \item \textbf{ Languages }: English, Malayalam
+\end{sectionheader_nobullet}\begin{sectionheader}{Projects}
+  \item \textbf{ Engineering }:
+  \begin{itemize}[leftmargin=1em]
+      \item \textbf{ Zero-Turn Vehicle Model }: Designed and built a model vehicle with four steering configurations. Team of six. \\
+        {\small \emph{ TKM College of Engineering, Dec 2017--Apr 2018 }}
+  \end{itemize}
+  \item \textbf{ Web & AI }:
+  \begin{itemize}[leftmargin=1em]
+      \item \textbf{ AI Portfolio Website }: Dynamic AI-powered portfolio using Python and React. Smart project recommendations. \\
+        {\small \emph{ Personal Project, 2024 }}
+  \end{itemize}
+\end{sectionheader}\begin{sectionheader}{Experience}
+  \item \textbf{ Reffera } \hfill {\emph{ Jan 2017 - Jan 2019 }} \\
+    {\small Creative Director} \\
+    {\footnotesize Developed graphics and layouts for company logos and websites; reviewed final layouts and suggested improvements.}
+  \item \textbf{ TKM College of Engineering } \hfill {\emph{ Dec 2017 - Apr 2018 }} \\
+    {\small Project Lead} \\
+    {\footnotesize Led a team to design and fabricate a multi-mode steering vehicle from scratch.}
+\end{sectionheader}\begin{sectionheader}{Education}
+  \item \textbf{ TKM College of Engineering, Kollam } \hfill {\emph{ Aug 2014 -- May 2018 }} \\
+    B.Tech, Production Engineering \\
+    {\footnotesize GPA: 6.73/10. Relevant Coursework: Industrial Engineering, Advanced Decision Modeling, Principles of Management.}
+  \item \textbf{ Kuriakose Elias English Medium School, Kottayam } \hfill {\emph{ Aug 2012 -- Apr 2014 }} \\
+    ISC (CISCE) \\
+    {\footnotesize Total Percentage: 88.6}
+\end{sectionheader}\end{adjustbox}
+\end{document}

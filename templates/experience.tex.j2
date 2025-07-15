@@ -1,0 +1,7 @@
+\begin{sectionheader}{Experience}
+{% for job in experience if job.company %}
+  \item \textbf{ {{ job.company }} } \hfill {\emph{ {{ job.dates }} }} \\
+    {\small {{ job.position }}} \\
+    {\footnotesize {{ job.description }}}
+{% endfor %}
+\end{sectionheader}

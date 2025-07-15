@@ -1,0 +1,36 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[left=0.8in,top=0.7in,right=0.8in,bottom=0.7in]{geometry}
+\usepackage[parfill]{parskip}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, urlcolor=blue}
+\pagestyle{empty}
+\usepackage[export]{adjustbox}
+
+% Section macros
+\newcommand{\namesection}[2]{
+    \begin{center}
+        {\huge \bfseries #1}\\
+        \vspace{6pt}
+        \small #2
+    \end{center}
+    \vspace{12pt}
+}
+
+\newenvironment{sectionheader}[1]{
+    \vspace{10pt}
+    \noindent\textbf{\uppercase{#1}}\vspace{2pt}\\
+    \hrule height 1pt \vspace{4pt}
+    \begin{itemize}[leftmargin=1.2em, itemsep=2pt, topsep=2pt]
+}{
+    \end{itemize}
+}
+
+\newenvironment{sectionheader_nobullet}[1]{
+    \vspace{10pt}
+    \noindent\textbf{\uppercase{#1}}\vspace{2pt}\\
+    \hrule height 1pt \vspace{4pt}
+    \begin{itemize}[leftmargin=0em, label={}, itemsep=2pt, topsep=2pt]
+}{
+    \end{itemize}
+}

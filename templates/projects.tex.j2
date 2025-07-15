@@ -1,0 +1,11 @@
+\begin{sectionheader}{Projects}
+{% for cat in projects %}
+  \item \textbf{ {{ cat.category }} }:
+  \begin{itemize}[leftmargin=1em]
+    {% for proj in cat["items"] %}
+      \item \textbf{ {{ proj.title }} }: {{ proj.description }} \\
+        {\small \emph{ {{ proj.details }} }}
+    {% endfor %}
+  \end{itemize}
+{% endfor %}
+\end{sectionheader}

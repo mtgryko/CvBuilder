@@ -1,0 +1,5 @@
+\begin{sectionheader_nobullet}{Skills}
+{% for cat in skills %}
+  \item \textbf{ {{ cat.category }} }: {{ cat["items"] | join(", ") }}
+{% endfor %}
+\end{sectionheader_nobullet}
