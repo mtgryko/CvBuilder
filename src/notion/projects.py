@@ -1,7 +1,10 @@
 from src.utils.api import NOTION_BASE_HEADERS
+from src.utils.logger import get_logger
 import requests
 import json
 import os
+
+logger = get_logger("notion-projects")
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 DATA_PATH = os.path.join(BASE_DIR, 'data', 'projects.json')
@@ -12,7 +15,7 @@ def fetch_projects(project_id):
     response = requests.post(url, headers=NOTION_BASE_HEADERS)
 
     if response.status_code != 200:
-        print("Error fetching data:", response.json())
+        logger.error("Error fetching data:", response.json())
         return None
 
     return response.json()
@@ -58,11 +61,16 @@ def save_projects_to_file(projects):
     os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
     with open(DATA_PATH, 'w', encoding='utf-8') as f:
         json.dump(projects, f, indent=2, ensure_ascii=False)
-    print(f"Saved {len(projects)} projects to {DATA_PATH}")
+    logger.info(f"Saved {len(projects)} projects to {DATA_PATH}")
 
-def run(project_id):
+def run():
+    project_id = os.getenv("NOTION_PROJECT_ID")
+    if not project_id:
+        logger.error("NOTION_PROJECT_ID not set. Skipping project fetch.")
+        return
     notion_data = fetch_projects(project_id)
     if not notion_data:
+        logger.error("No NOTION_PROJECT data not fetched.")
         return
 
     projects = extract_project_data(notion_data)

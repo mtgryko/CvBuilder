@@ -1,6 +1,10 @@
+from src.utils.logger import get_logger
+
 import os
 import subprocess
 from jinja2 import Environment, FileSystemLoader
+
+logger = get_logger("latex")
 
 # Setup paths
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
@@ -19,11 +23,11 @@ def compile_latex(latex_file="main.tex", working_dir=TEMPLATE_DIR, output_dir=OU
             cwd=working_dir,
             check=True
         )
-        print(f"Compilation successful! PDF is in {output_dir}")
+        logger.info(f"Compilation successful! PDF is in {output_dir}")
     except subprocess.CalledProcessError as e:
-        print("Error in compilation:", e)
+        logger.exception("Error in compilation")
     except FileNotFoundError:
-        print("Error: pdflatex not found. Please ensure LaTeX is installed and in your PATH.")
+        logger.exception("Error: pdflatex not found. Please ensure LaTeX is installed and in your PATH.")
 
 def escape_latex(s):
     if not isinstance(s, str):
@@ -42,8 +46,8 @@ def render_template(template_name, context):
     try:
         template = env.get_template(template_name)
         return template.render(**context)
-    except Exception as e:
-        print(f"Error rendering template: {template_name}\n{e}")
+    except Exception:
+        logger.exception(f"Error rendering template: {template_name}")
         exit(1)
 
 def render_resume(contact, skills, projects, experience, education):
@@ -76,10 +80,10 @@ LinkedIn: \\href{{{escape_latex(contact['linkedin'])}}}{{{escape_latex(contact['
 
         return tex
     except Exception as e:
-        print(f"Error assembling LaTeX document:\n{e}")
+        logger.exception("Error assembling LaTeX document")
         exit(1)
 
 def save_tex(tex_str, path=MAIN_TEX_PATH):
     with open(path, 'w', encoding='utf-8') as f:
         f.write(tex_str)
-    print(f"main.tex written to {path}")
+    logger.info(f"main.tex written to {path}")
