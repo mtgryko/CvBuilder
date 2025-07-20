@@ -1,5 +1,6 @@
+# src/notion/notion.py
 
-from src.notion import projects
+from src.notion import projects, skills
 from src.utils.logger import get_logger
 
 import os
@@ -28,6 +29,7 @@ class Notion:
         if data:
             self.save_projects(data)
             logger.info("[DONE] Projects synced\n")
-
+            
     def sync_all(self):
         self.sync_projects()
+        skills.generate_skills_from_projects()
