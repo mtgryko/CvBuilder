@@ -1,22 +1,26 @@
-from utils.api import NOTION_BASE_HEADERS
-
+from src.utils.api import NOTION_BASE_HEADERS
 import requests
+import json
+import os
+
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
+DATA_PATH = os.path.join(BASE_DIR, 'data', 'projects.json')
 
 def fetch_projects(project_id):
     """Fetch project data from Notion"""
     url = f"https://api.notion.com/v1/databases/{project_id}/query"
     response = requests.post(url, headers=NOTION_BASE_HEADERS)
-    
+
     if response.status_code != 200:
         print("Error fetching data:", response.json())
         return None
-    
+
     return response.json()
 
 def extract_project_data(notion_data):
     """Extract relevant project details from Notion API response"""
     projects = []
-    
+
     for item in notion_data.get("results", []):
         properties = item.get("properties", {})
 
@@ -46,18 +50,20 @@ def extract_project_data(notion_data):
             "role": role,
             "tags": ", ".join(tags),
         })
-    
+
     return projects
 
+def save_projects_to_file(projects):
+    """Dump project data to data/projects.json"""
+    os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
+    with open(DATA_PATH, 'w', encoding='utf-8') as f:
+        json.dump(projects, f, indent=2, ensure_ascii=False)
+    print(f"Saved {len(projects)} projects to {DATA_PATH}")
 
-def display_projects(projects):
-    """Print retrieved projects"""
-    for idx, project in enumerate(projects, 1):
-        print(f"{idx}. {project['name']} ({project['status']})")
-        print(f"   Category: {project['category']}")
-        print(f"   Tech Stack: {project['tech_stack']}")
-        print(f"   Description: {project['description']}")
-        print(f"   Notes: {project['notes']}")
-        print(f"   Start Date: {project['start_date']} - End Date: {project['end_date']}")
-        print(f"   Role: {project['role']}")
-        print(f"   Tags: {project['tags']}\n")
+def run(project_id):
+    notion_data = fetch_projects(project_id)
+    if not notion_data:
+        return
+
+    projects = extract_project_data(notion_data)
+    save_projects_to_file(projects)
