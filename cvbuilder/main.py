@@ -1,5 +1,5 @@
 from src.notion.notion import Notion
-from latex import compile_latex, render_resume, save_tex
+from src.latex import compile_latex, render_resume, save_tex
 from src.utils.commons import load_json
 
 import os

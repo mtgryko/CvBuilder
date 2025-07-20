@@ -7,7 +7,7 @@ from jinja2 import Environment, FileSystemLoader
 logger = get_logger("latex")
 
 # Setup paths
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../"))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 OUTPUT_DIR = os.path.join(BASE_DIR, 'output')
 MAIN_TEX_PATH = os.path.join(TEMPLATE_DIR, 'main.tex')

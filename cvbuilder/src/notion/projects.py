@@ -1,6 +1,6 @@
 # src/notion/projects.py
 
-from utils.api import NOTION_BASE_HEADERS
+from src.utils.api import NOTION_BASE_HEADERS
 from src.utils.logger import get_logger
 import requests
 import json
