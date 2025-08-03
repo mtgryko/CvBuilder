@@ -1,4 +1,5 @@
 from src.notion.notion import Notion
+from src.cv_agent.selector import CVSelector
 from src.latex import compile_latex, render_resume, save_tex
 from src.utils.commons import load_json
 
@@ -17,14 +18,18 @@ if __name__ == "__main__":
     notion = Notion()
     notion.sync_all()
 
-    # Step 2: Load JSON data
+    # Step 2: Run AI agent to select best content
+    # selector = CVSelector(mode="openai", model="gpt-4")
+    # selector.run_all()
+
+    # Step 3: Load filtered JSON data for LaTeX rendering
     contact = load_json(os.path.join(LATEX_DIR, 'contact.json'))
     skills = load_json(os.path.join(LATEX_DIR, 'skills.json'))
     projects = load_json(os.path.join(LATEX_DIR, 'projects.json'))
     experience = load_json(os.path.join(LATEX_DIR, 'experience.json'))
     education = load_json(os.path.join(LATEX_DIR, 'education.json'))
 
-    # Step 3: Render + Save LaTeX + Compile
+    # Step 4: Render + Save LaTeX + Compile
     tex = render_resume(contact, skills, projects, experience, education)
     save_tex(tex)
     compile_latex()

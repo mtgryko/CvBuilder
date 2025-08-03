@@ -1,0 +1,7 @@
+{
+  "max_characters": {
+    "projects": 1800,
+    "skills": 500
+  },
+  "job_description_path": "job_descriptions/job.txt"
+}

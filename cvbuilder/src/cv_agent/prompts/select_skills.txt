@@ -1,0 +1,21 @@
+You are building the Skills section of a CV for a specific job.
+
+## Instructions:
+- Pick and group only the most relevant skills for the job.
+- Rewrite or re-categorize if needed (but stay truthful).
+- Be concise and do NOT exceed {max_chars} characters total.
+- Do not include unrelated topics.
+- Group into clear categories with 3–5 skills max per category.
+
+## Job Description:
+{job_desc}
+
+## Skills:
+{skills}
+
+Return only a list in this format:
+
+[
+  {{"category": "...", "items": ["...", "..."]}},
+  ...
+]

@@ -2,6 +2,7 @@
 
 from src.utils.api import NOTION_BASE_HEADERS
 from src.utils.logger import get_logger
+from src.schemas.notion import Project  # <-- use Pydantic model
 import requests
 import json
 import os
@@ -23,7 +24,7 @@ def fetch_projects(project_id):
     return response.json()
 
 def extract_project_data(notion_data):
-    """Extract relevant project details from Notion API response"""
+    """Extract relevant project details and return a list of Project models"""
     projects = []
 
     for item in notion_data.get("results", []):
@@ -43,18 +44,20 @@ def extract_project_data(notion_data):
         role = properties.get("Role", {}).get("select", {}).get("name", "No Role")
         tags = [t["name"] for t in properties.get("Tags", {}).get("multi_select", [])]
 
-        projects.append({
-            "name": project_name,
-            "status": status,
-            "category": category,
-            "tech_stack": ", ".join(tech_stack),
-            "description": description,
-            "notes": notes,
-            "start_date": start_date,
-            "end_date": end_date,
-            "role": role,
-            "tags": ", ".join(tags),
-        })
+        # Create Pydantic model instance
+        project_entry = Project(
+            name=project_name,
+            status=status,
+            category=category,
+            tech_stack=tech_stack,
+            description=description,
+            notes=notes,
+            start_date=start_date,
+            end_date=end_date,
+            role=role,
+            tags=tags
+        )
+        projects.append(project_entry)
 
     return projects
 
@@ -62,7 +65,7 @@ def save_projects_to_file(projects):
     """Dump project data to data/projects.json"""
     os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
     with open(DATA_PATH, 'w', encoding='utf-8') as f:
-        json.dump(projects, f, indent=2, ensure_ascii=False)
+        json.dump([p.model_dump(mode="json") for p in projects], f, indent=2, ensure_ascii=False)
     logger.info(f"Saved {len(projects)} projects to {DATA_PATH}")
 
 def run():
