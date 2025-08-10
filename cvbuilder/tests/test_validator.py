@@ -93,3 +93,32 @@ def test_missing_fields_triggers_retry():
     assert len(agent.prompts) == 2
     assert agent.prompts[1] == "Reformat this to valid JSON only:\n\n{'bar': 1}"
 
+
+class BrokenJsonAgent:
+    def __init__(self):
+        self.prompts = []
+        # Missing closing brace should trigger regex-based extraction
+        self.responses = ['{"foo":1, "bar":2']
+
+    def ask(self, prompt: str) -> str:
+        self.prompts.append(prompt)
+        return self.responses.pop(0)
+
+
+class DoubleSchema(BaseModel):
+    foo: int
+    bar: int
+
+
+def test_regex_fallback_extracts_fields():
+    agent = BrokenJsonAgent()
+    result = ask_and_validate_json(
+        agent,
+        "Prompt",
+        "Test",
+        schema=DoubleSchema,
+    )
+
+    assert result == {"foo": 1, "bar": 2}
+    assert len(agent.prompts) == 1
+
