@@ -18,7 +18,15 @@ def fetch_projects(project_id):
     response = requests.post(url, headers=NOTION_BASE_HEADERS)
 
     if response.status_code != 200:
-        logger.error("Error fetching data:", response.json())
+        # The logging call previously passed the response JSON as a separate argument
+        # without a formatting placeholder which caused a TypeError during
+        # string formatting. We explicitly format the error message so the
+        # response body is logged correctly.
+        try:
+            error_detail = response.json()
+        except ValueError:
+            error_detail = response.text
+        logger.error("Error fetching data: %s", error_detail)
         return None
 
     return response.json()
