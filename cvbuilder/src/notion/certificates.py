@@ -65,7 +65,7 @@ def save_certificates_to_file(data):
     """Save list of Certificate models to JSON"""
     os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
     with open(DATA_PATH, 'w', encoding='utf-8') as f:
-        # Serialize using .dict() for Pydantic models
+        # Serialize using .model_dump(mode="json") for Pydantic models
         json.dump([c.model_dump(mode="json") for c in data], f, indent=2, ensure_ascii=False)
     logger.info(f"Saved {len(data)} certificates to {DATA_PATH}")
 
