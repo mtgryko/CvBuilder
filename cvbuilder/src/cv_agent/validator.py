@@ -1,11 +1,34 @@
 import ast
 import json
+import re
 from typing import Callable, Optional, Type
 from pydantic import BaseModel
 from src.utils.logger import get_logger
 
 logger = get_logger("cv-validator")
 
+
+def _extract_fields(text: str, fields) -> Optional[dict]:
+    """Best-effort extraction of required fields from broken JSON.
+
+    Uses regular expressions to pull out simple key/value pairs so that a
+    partially formatted response (missing braces, mismatched quotes, etc.) can
+    still be validated by Pydantic. Only returns a dict if all requested fields
+    are present.
+    """
+    extracted = {}
+    for field in fields:
+        # match "field": "value" or 'field': 'value'
+        pattern = rf"['\"]{field}['\"]\s*:\s*(['\"])(.*?)\1"
+        m = re.search(pattern, text)
+        if m:
+            extracted[field] = m.group(2)
+            continue
+        # match numeric values without quotes
+        m = re.search(rf"['\"]{field}['\"]\s*:\s*([0-9]+)", text)
+        if m:
+            extracted[field] = m.group(1)
+    return extracted if len(extracted) == len(list(fields)) else None
 
 def ask_and_validate_json(
     agent,
@@ -43,6 +66,8 @@ def ask_and_validate_json(
                         parsed = candidate
                 except Exception:
                     parsed = None
+                if parsed is None:
+                    parsed = _extract_fields(result, fields)
             if parsed is None:
                 logger.error(f"{context}: Failed to parse JSON on attempt {attempt+1}")
                 if attempt < retries:
