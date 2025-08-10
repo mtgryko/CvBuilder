@@ -1,6 +1,7 @@
 from src.utils.logger import get_logger
 
 import os
+import re
 import subprocess
 from jinja2 import Environment, FileSystemLoader
 
@@ -38,9 +39,8 @@ def escape_latex(s):
         '~': r'\textasciitilde{}', '^': r'\textasciicircum{}',
         '\\': r'\textbackslash{}',
     }
-    for old, new in replace.items():
-        s = s.replace(old, new)
-    return s
+    pattern = re.compile('|'.join(re.escape(k) for k in replace))
+    return pattern.sub(lambda m: replace[m.group()], s)
 
 def render_template(template_name, context):
     try:
