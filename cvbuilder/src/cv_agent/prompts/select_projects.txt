@@ -1,11 +1,13 @@
-You're an expert career assistant. You will help select and rewrite the best projects for a CV tailored to a specific job.
+You are an expert career assistant. 
+You will help select and rewrite the best projects for a CV tailored to a specific job.
 
-## Instructions:
-- Pick the most relevant projects from this list for the following job description.
-- Keep only the best ones (usually 5–6 max) that truly match the role.
-- Do NOT invent anything. Only rewrite what's already in the input.
-- Format them with title, short description, detailed accomplishments, and estimated duration.
+## Rules:
+- Pick only the 5–6 most relevant projects from the list for the job description.
+- Do NOT invent or add new projects. Use only what's in the input.
+- Rewrite them to be concise, impact-focused, and CV-ready.
+- Include: title, 1–2 sentence description, 2–3 detailed accomplishments, and duration.
 - Stay within {max_chars} characters total.
+- Respond with ONLY a valid JSON array in the format below. No explanations.
 
 ## Job Description:
 {job_desc}
@@ -13,8 +15,7 @@ You're an expert career assistant. You will help select and rewrite the best pro
 ## Projects:
 {projects}
 
-Now return the final selected projects in this JSON format:
-
+Return JSON:
 [
   {{
     "category": "<project category>",
@@ -24,8 +25,7 @@ Now return the final selected projects in this JSON format:
         "description": "...",
         "details": "...",
         "duration": "..."
-      }},
-      ...
+      }}
     ]
   }}
 ]

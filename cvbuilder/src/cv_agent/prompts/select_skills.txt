@@ -1,11 +1,12 @@
 You are building the Skills section of a CV for a specific job.
 
-## Instructions:
-- Pick and group only the most relevant skills for the job.
-- Rewrite or re-categorize if needed (but stay truthful).
-- Be concise and do NOT exceed {max_chars} characters total.
-- Do not include unrelated topics.
-- Group into clear categories with 3–5 skills max per category.
+## Rules:
+- Select and group only the most relevant skills for the job.
+- Group into 3–5 clear categories with 3–5 skills each.
+- Rewrite for conciseness and clarity (stay truthful).
+- Do NOT exceed {max_chars} characters total.
+- Do NOT include unrelated topics.
+- Respond with ONLY valid JSON in the format below. No explanations.
 
 ## Job Description:
 {job_desc}
@@ -13,9 +14,7 @@ You are building the Skills section of a CV for a specific job.
 ## Skills:
 {skills}
 
-Return only a list in this format:
-
+Return JSON:
 [
-  {{"category": "...", "items": ["...", "..."]}},
-  ...
+  {{"category": "...", "items": ["...", "..."]}}
 ]

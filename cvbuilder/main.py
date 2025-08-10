@@ -19,8 +19,8 @@ if __name__ == "__main__":
     notion.sync_all()
 
     # Step 2: Run AI agent to select best content
-    # selector = CVSelector(mode="openai", model="gpt-4")
-    # selector.run_all()
+    selector = CVSelector(mode=os.getenv("MODE", "local"), model=os.getenv("MODEL", "deepseek-coder:6.7b"))
+    selector.run_all()
 
     # Step 3: Load filtered JSON data for LaTeX rendering
     contact = load_json(os.path.join(LATEX_DIR, 'contact.json'))
