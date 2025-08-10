@@ -1,3 +1,4 @@
+import ast
 import json
 from typing import Callable, Optional, Type
 from pydantic import BaseModel
@@ -19,9 +20,12 @@ def ask_and_validate_json(
     """Send prompt via agent and validate JSON response against schema.
 
     If parsing or validation fails, optionally retry with a reformatted prompt
-    providing feedback about the expected structure.
+    providing feedback about the expected structure. When re-asking after
+    validation errors, only the expected format and the invalid JSON are sent to
+    the agent, avoiding resending the entire original prompt. If the response
+    contains all required fields but has minor JSON formatting issues, an
+    attempt is made to repair it locally before requesting help from the agent.
     """
-    base_prompt = prompt
     for attempt in range(retries + 1):
         result = agent.ask(prompt)
         if log_callback:
@@ -30,12 +34,22 @@ def ask_and_validate_json(
         try:
             parsed = json.loads(result)
         except json.JSONDecodeError:
-            logger.error(f"{context}: Failed to parse JSON on attempt {attempt+1}")
-            if attempt < retries:
-                prompt = f"Reformat this to valid JSON only:\n\n{result}"
-                continue
-            logger.error(f"Final raw output was:\n{result}")
-            raise
+            fields = schema.model_fields.keys()
+            parsed = None
+            if all(field in result for field in fields):
+                try:
+                    candidate = ast.literal_eval(result)
+                    if isinstance(candidate, dict) and all(f in candidate for f in fields):
+                        parsed = candidate
+                except Exception:
+                    parsed = None
+            if parsed is None:
+                logger.error(f"{context}: Failed to parse JSON on attempt {attempt+1}")
+                if attempt < retries:
+                    prompt = f"Reformat this to valid JSON only:\n\n{result}"
+                    continue
+                logger.error(f"Final raw output was:\n{result}")
+                raise
 
         try:
             return schema.model_validate(parsed).model_dump(mode="python")
@@ -43,7 +57,6 @@ def ask_and_validate_json(
             logger.error(f"{context}: JSON schema validation failed on attempt {attempt+1}")
             if attempt < retries and format_hint:
                 prompt = (
-                    f"{base_prompt}\n\n"
                     f"Expected JSON format:\n{format_hint}\n\n"
                     f"Invalid JSON:\n{result}\n\n"
                     f"Respond only with corrected JSON."
