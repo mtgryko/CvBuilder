@@ -7,3 +7,4 @@ output
 data
 latex_data
 job_descriptions
+cvbuilder/templates/main.tex
