@@ -21,6 +21,7 @@ def ask_and_validate_json(
     If parsing or validation fails, optionally retry with a reformatted prompt
     providing feedback about the expected structure.
     """
+    base_prompt = prompt
     for attempt in range(retries + 1):
         result = agent.ask(prompt)
         if log_callback:
@@ -42,8 +43,10 @@ def ask_and_validate_json(
             logger.error(f"{context}: JSON schema validation failed on attempt {attempt+1}")
             if attempt < retries and format_hint:
                 prompt = (
+                    f"{base_prompt}\n\n"
                     f"Expected JSON format:\n{format_hint}\n\n"
-                    f"Invalid JSON:\n{result}"
+                    f"Invalid JSON:\n{result}\n\n"
+                    f"Respond only with corrected JSON."
                 )
                 continue
             logger.error(f"Final invalid JSON was:\n{result}")
