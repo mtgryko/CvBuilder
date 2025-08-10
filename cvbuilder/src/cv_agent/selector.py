@@ -4,6 +4,8 @@ import os
 import json
 from src.cv_agent.agent import CVAgent
 from src.utils.logger import get_logger
+from src.schemas.latex_data import ProjectsSchema, SkillsSchema
+from src.cv_agent.validator import ask_and_validate_json
 
 logger = get_logger("cv-selector")
 
@@ -12,6 +14,7 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 LATEX_DIR = os.path.join(BASE_DIR, "latex_data")
 CONFIG_PATH = os.path.join(BASE_DIR, "src/cv_agent/config.json")
 LOG_FILE = os.path.join(BASE_DIR, "logs/model_responses.log")
+FORMAT_DIR = os.path.join(BASE_DIR, "src/schemas/formats")
 
 
 class CVSelector:
@@ -39,6 +42,11 @@ class CVSelector:
         with open(path, "r") as f:
             return json.load(f)
 
+    def _load_format_hint(self, filename):
+        path = os.path.join(FORMAT_DIR, filename)
+        with open(path, "r") as f:
+            return f.read().strip()
+
     def _save_latex(self, filename, data):
         os.makedirs(LATEX_DIR, exist_ok=True)
         path = os.path.join(LATEX_DIR, filename)
@@ -49,23 +57,6 @@ class CVSelector:
         os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
         with open(LOG_FILE, "a", encoding="utf-8") as log:
             log.write(f"\n--- {context} ---\nPROMPT:\n{prompt}\n\nRESPONSE:\n{response}\n\n")
-
-    def _ask_and_parse_json(self, prompt, context, retries=1):
-        """Send prompt, log response, and parse JSON with optional retries."""
-        for attempt in range(retries + 1):
-            result = self.agent.ask(prompt)
-            self._save_debug_log(context, prompt, result)
-
-            try:
-                return json.loads(result)
-            except json.JSONDecodeError:
-                logger.error(f"{context}: Failed to parse JSON on attempt {attempt+1}")
-                if attempt < retries:
-                    prompt = f"Reformat this to valid JSON only:\n\n{result}"
-                    continue
-                else:
-                    logger.error(f"Final raw output was:\n{result}")
-                    raise
 
     def select_projects(self):
         job_desc = self._load_job_description()
@@ -79,7 +70,15 @@ class CVSelector:
             max_chars=max_chars
         )
 
-        parsed = self._ask_and_parse_json(prompt, "Project Selection", retries=1)
+        parsed = ask_and_validate_json(
+            self.agent,
+            prompt,
+            "Project Selection",
+            schema=ProjectsSchema,
+            format_hint=self._load_format_hint("projects.json"),
+            retries=1,
+            log_callback=self._save_debug_log,
+        )
         self._save_latex("projects.json", parsed)
         logger.info("Selected projects saved to LaTeX folder.")
 
@@ -95,7 +94,15 @@ class CVSelector:
             max_chars=max_chars
         )
 
-        parsed = self._ask_and_parse_json(prompt, "Skills Selection", retries=1)
+        parsed = ask_and_validate_json(
+            self.agent,
+            prompt,
+            "Skills Selection",
+            schema=SkillsSchema,
+            format_hint=self._load_format_hint("skills.json"),
+            retries=1,
+            log_callback=self._save_debug_log,
+        )
         self._save_latex("skills.json", parsed)
         logger.info("Selected skills saved to LaTeX folder.")
 
