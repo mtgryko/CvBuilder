@@ -17,8 +17,8 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_PATH = os.path.join(BASE_DIR, "data", "projects.json")
 
 
-def _compute_duration(start: Optional[str], end: Optional[str]) -> str:
-    """Return human readable duration between two ISO date strings."""
+def compute_duration(start: Optional[str], end: Optional[str]) -> str:
+    """Return human readable duration between two ISO dates."""
     if not start:
         return ""
     try:
@@ -31,7 +31,7 @@ def _compute_duration(start: Optional[str], end: Optional[str]) -> str:
     if months <= 0:
         months = 1
     years, months = divmod(months, 12)
-    parts = []
+    parts: List[str] = []
     if years:
         parts.append(f"{years} yr")
     if months:
@@ -65,7 +65,7 @@ class Projects(NotionClient):
             start_date = properties.get("Start Date", {}).get("date", {}).get("start")
             end_date_prop = properties.get("End Date")
             end_date = end_date_prop["date"]["start"] if end_date_prop and end_date_prop.get("date") else None
-            duration = _compute_duration(start_date, end_date)
+            duration = compute_duration(start_date, end_date)
             role = properties.get("Role", {}).get("select", {}).get("name", "No Role")
             tags = [t["name"] for t in properties.get("Tags", {}).get("multi_select", [])]
             project_entry = Project(
