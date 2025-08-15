@@ -20,8 +20,7 @@ class Project(BaseModel):
     tech_stack: List[str]
     description: Optional[str] = None
     notes: Optional[str] = None
-    start_date: Optional[str] = None
-    end_date: Optional[str] = None
+    duration: Optional[str] = None
     role: Optional[str] = None
     tags: List[str]
 
