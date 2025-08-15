@@ -27,8 +27,10 @@ def compile_latex(latex_file="main.tex", working_dir=TEMPLATE_DIR, output_dir=OU
         logger.info(f"Compilation successful! PDF is in {output_dir}")
     except subprocess.CalledProcessError as e:
         logger.exception("Error in compilation")
+        raise
     except FileNotFoundError:
         logger.exception("Error: pdflatex not found. Please ensure LaTeX is installed and in your PATH.")
+        raise
 
 def escape_latex(s):
     if not isinstance(s, str):
