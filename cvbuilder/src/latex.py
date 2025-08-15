@@ -42,6 +42,9 @@ def escape_latex(s):
     pattern = re.compile('|'.join(re.escape(k) for k in replace))
     return pattern.sub(lambda m: replace[m.group()], s)
 
+# register the filter with Jinja2 environment
+env.filters["escape_latex"] = escape_latex
+
 def render_template(template_name, context):
     try:
         template = env.get_template(template_name)
