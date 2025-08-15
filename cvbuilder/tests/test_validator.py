@@ -1,3 +1,8 @@
+import json
+import os
+import sys
+from pydantic import BaseModel
+
 import os
 import sys
 from pydantic import BaseModel
@@ -18,27 +23,26 @@ class DummyAgent:
             '{"foo": 1}',
         ]
 
-    def ask(self, prompt: str) -> str:
+    def ask(self, prompt: str, schema=None):
         self.prompts.append(prompt)
         return self.responses.pop(0)
 
 
-def test_retry_prompt_minimal():
+def test_retry_prompt_includes_schema():
     agent = DummyAgent()
-    format_hint = '{"foo": 0}'
     result = ask_and_validate_json(
         agent,
         "Initial prompt that should not be repeated",
         "Test",
         schema=DummySchema,
-        format_hint=format_hint,
         retries=1,
     )
 
     assert result == {"foo": 1}
     assert len(agent.prompts) == 2
+    schema_json = json.dumps(DummySchema.model_json_schema(), indent=2)
     expected_retry = (
-        f"Expected JSON format:\n{format_hint}\n\n"
+        f"Expected JSON schema:\n{schema_json}\n\n"
         "Invalid JSON:\n{\"foo\": \"bar\"}\n\n"
         "Respond only with corrected JSON."
     )
@@ -46,18 +50,18 @@ def test_retry_prompt_minimal():
     assert "Initial prompt" not in agent.prompts[1]
 
 
-class SingleQuoteAgent:
+class ValidAgent:
     def __init__(self):
         self.prompts = []
-        self.responses = ["{'foo': 1}"]
+        self.responses = ['{"foo": 1}']
 
-    def ask(self, prompt: str) -> str:
+    def ask(self, prompt: str, schema=None):
         self.prompts.append(prompt)
         return self.responses.pop(0)
 
 
-def test_auto_fix_with_all_fields():
-    agent = SingleQuoteAgent()
+def test_success_no_retry():
+    agent = ValidAgent()
     result = ask_and_validate_json(
         agent,
         "Prompt",
@@ -67,58 +71,3 @@ def test_auto_fix_with_all_fields():
 
     assert result == {"foo": 1}
     assert len(agent.prompts) == 1
-
-
-class MissingFieldAgent:
-    def __init__(self):
-        self.prompts = []
-        self.responses = ["{'bar': 1}", '{"foo": 2}']
-
-    def ask(self, prompt: str) -> str:
-        self.prompts.append(prompt)
-        return self.responses.pop(0)
-
-
-def test_missing_fields_triggers_retry():
-    agent = MissingFieldAgent()
-    result = ask_and_validate_json(
-        agent,
-        "Prompt",
-        "Test",
-        schema=DummySchema,
-        retries=1,
-    )
-
-    assert result == {"foo": 2}
-    assert len(agent.prompts) == 2
-    assert agent.prompts[1] == "Reformat this to valid JSON only:\n\n{'bar': 1}"
-
-
-class BrokenJsonAgent:
-    def __init__(self):
-        self.prompts = []
-        # Missing closing brace should trigger regex-based extraction
-        self.responses = ['{"foo":1, "bar":2']
-
-    def ask(self, prompt: str) -> str:
-        self.prompts.append(prompt)
-        return self.responses.pop(0)
-
-
-class DoubleSchema(BaseModel):
-    foo: int
-    bar: int
-
-
-def test_regex_fallback_extracts_fields():
-    agent = BrokenJsonAgent()
-    result = ask_and_validate_json(
-        agent,
-        "Prompt",
-        "Test",
-        schema=DoubleSchema,
-    )
-
-    assert result == {"foo": 1, "bar": 2}
-    assert len(agent.prompts) == 1
-

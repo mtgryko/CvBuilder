@@ -6,7 +6,8 @@ import requests
 import logging
 from openai import OpenAI
 from dotenv import load_dotenv
-from typing import Literal
+from typing import Literal, Optional, Type
+from pydantic import BaseModel
 
 # Load environment variables
 load_dotenv()
@@ -27,26 +28,35 @@ class CVAgent:
         else:
             raise ValueError("Mode must be 'openai' or 'local'")
 
-    def ask(self, prompt: str, extract_json=True) -> str:
-        """
-        Ask the model for a response.
-        :param extract_json: Extract JSON part from the response if extra text exists.
+    def ask(
+        self,
+        prompt: str,
+        schema: Optional[Type[BaseModel]] = None,
+        extract_json: bool = True,
+    ) -> str:
+        """Ask the model for a response.
+
+        Args:
+            prompt: Prompt to send to the model.
+            schema: Optional Pydantic model to constrain output.
+            extract_json: Extract JSON part from the response if extra text exists
+                (ignored when a schema is provided).
         """
         logger.debug(f"Using model: {self.model} (mode: {self.mode})")
         logger.debug(f"Prompt sent:\n{prompt}")
 
         # Call the right backend
         if self.mode == "openai":
-            result = self._ask_openai(prompt)
+            result = self._ask_openai(prompt, schema)
         else:
-            result = self._ask_ollama(prompt)
+            result = self._ask_ollama(prompt, schema)
 
         if not result:
             logger.error("Empty response from model.")
             raise RuntimeError("Model returned an empty response.")
 
-        # Extract JSON if needed
-        if extract_json:
+        # Extract JSON if needed (not required when schema is provided)
+        if extract_json and schema is None:
             cleaned = self._extract_json(result)
             if cleaned:
                 result = cleaned
@@ -54,20 +64,37 @@ class CVAgent:
         logger.debug(f"Cleaned model response:\n{result}")
         return result.strip()
 
-    def _ask_openai(self, prompt: str) -> str:
+    def _ask_openai(
+        self, prompt: str, schema: Optional[Type[BaseModel]] = None
+    ) -> str:
         try:
-            completion = self.client.chat.completions.create(
-                model=self.model,
-                messages=[{"role": "user", "content": prompt}],
-            )
+            params = {
+                "model": self.model,
+                "messages": [{"role": "user", "content": prompt}],
+            }
+            if schema is not None:
+                params["response_format"] = {
+                    "type": "json_schema",
+                    "json_schema": {
+                        "name": schema.__name__,
+                        "schema": schema.model_json_schema(),
+                    },
+                }
+            completion = self.client.chat.completions.create(**params)
             return completion.choices[0].message.content.strip()
         except Exception as e:
             logger.error(f"OpenAI API error: {e}")
             raise
 
-    def _ask_ollama(self, prompt: str) -> str:
+    def _ask_ollama(
+        self, prompt: str, schema: Optional[Type[BaseModel]] = None
+    ) -> str:
         url = f"{self.ollama_host}/api/generate"
-        payload = {"model": self.model, "prompt": prompt, "stream": False, "format": "json"}
+        payload = {"model": self.model, "prompt": prompt, "stream": False}
+        if schema is not None:
+            payload["format"] = schema.model_json_schema()
+        else:
+            payload["format"] = "json"
         try:
             response = requests.post(url, json=payload)
             if response.status_code != 200:

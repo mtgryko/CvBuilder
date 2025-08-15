@@ -6,15 +6,10 @@ You are building the Skills section of a CV for a specific job.
 - Rewrite for conciseness and clarity (stay truthful).
 - Do NOT exceed {max_chars} characters total.
 - Do NOT include unrelated topics.
-- Respond with ONLY valid JSON in the format below. No explanations.
+- Respond with ONLY valid JSON. No explanations.
 
 ## Job Description:
 {job_desc}
 
 ## Skills:
 {skills}
-
-Return JSON:
-[
-  {{"category": "...", "items": ["...", "..."]}}
-]
