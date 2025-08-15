@@ -60,16 +60,36 @@ def render_resume(contact, skills, projects, experience, education):
             tex = f.read()
 
         # Contact info block
-        tex += f"""\\namesection{{{escape_latex(contact['name'])}}}{{%
-{escape_latex(contact['phone'])} \\\\
-\\href{{mailto:{escape_latex(contact['email'])}}}{{{escape_latex(contact['email'])}}} \\\\
-LinkedIn: \\href{{{escape_latex(contact['linkedin'])}}}{{{escape_latex(contact['linkedin'].replace('https://',''))}}} \\\\
-"""
+        tex += f"\\namesection{{{escape_latex(contact.get('name', ''))}}}{{%\n"
+
+        contact_lines = []
+
+        if contact.get("phone"):
+            contact_lines.append(escape_latex(contact["phone"]))
+
+        if contact.get("email"):
+            contact_lines.append(
+                f"\\href{{mailto:{escape_latex(contact['email'])}}}{{{escape_latex(contact['email'])}}}"
+            )
+
+        if contact.get("linkedin"):
+            contact_lines.append(
+                f"LinkedIn: \\href{{{escape_latex(contact['linkedin'])}}}{{{escape_latex(contact['linkedin'].replace('https://',''))}}}"
+            )
+
         if "githubs" in contact:
             for gh in contact["githubs"]:
-                tex += f'{escape_latex(gh["label"])} GitHub: \\href{{{escape_latex(gh["url"])}}}{{{escape_latex(gh["url"].replace("https://", ""))}}} \\\\\n'
-        elif "github" in contact:
-            tex += f'GitHub: \\href{{{escape_latex(contact["github"])}}}{{{escape_latex(contact["github"].replace("https://", ""))}}}\n'
+                contact_lines.append(
+                    f"{escape_latex(gh['label'])} GitHub: \\href{{{escape_latex(gh['url'])}}}{{{escape_latex(gh['url'].replace('https://', ''))}}}"
+                )
+        elif contact.get("github"):
+            contact_lines.append(
+                f"GitHub: \\href{{{escape_latex(contact['github'])}}}{{{escape_latex(contact['github'].replace('https://', ''))}}}"
+            )
+
+        if contact_lines:
+            tex += " \\\n".join(contact_lines) + " \\\n"
+
         tex += "}\n"
 
         # Add your sections
