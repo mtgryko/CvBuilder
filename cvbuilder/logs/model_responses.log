@@ -272,3 +272,911 @@ Return JSON:
 RESPONSE:
 {"tools": ["Azure DevOps", "ARM Templates", "Bicep", "Terraform", "Ansible", "Jira", "Bitbucket", "Gitflow", "Agile/Scrum"], "tags": ["CI/CD", "Infrastructure as Code (IaC)", "Cloud Management", "Monitoring Tools"]}
 
+
+--- Project Selection ---
+PROMPT:
+You are an expert career assistant. 
+You will help select and rewrite the best projects for a CV tailored to a specific job.
+
+## Rules:
+- Pick only the 5–6 most relevant projects from the list for the job description.
+- Do NOT invent or add new projects. Use only what's in the input.
+- Rewrite them to be concise, impact-focused, and CV-ready.
+- Include: title, 1–2 sentence description, 2–3 detailed accomplishments, and duration.
+- Stay within 1800 characters total.
+- Respond with ONLY a valid JSON array. No explanations.
+
+## Job Description:
+Azure DevOps
+Do naszego zespołu poszukujemy doświadczonego DevOps Engineera, który będzie odpowiedzialny za projektowanie, wdrażanie oraz utrzymanie nowoczesnych środowisk chmurowych (Microsoft Azure) i procesów CI/CD. Szukamy kogoś, kto nie tylko buja w chmurach, ale też potrafi nimi zarządzać – sprawnie, skutecznie i z głową.
+
+Twój zakres obowiązków:
+Projektowanie, wdrażanie i utrzymanie infrastruktury w chmurze Microsoft Azure.
+Tworzenie i zarządzanie siecią Azure (np. Azure Front Door, Application Gateway, VNet, Private Links, DNS).
+Zarządzanie i administracja aplikacjami Web Apps, Static Web Apps, Container Instances, App Services oraz AKS.
+Konfiguracja i utrzymanie systemów monitoringu (Application Insights).
+Utrzymanie baz danych w środowisku Azure (Azure SQL, PostgreSQL).
+Administracja systemami kolejkowymi (Event Hubs, RabbitMQ).
+Tworzenie, rozwój i utrzymanie pipeline’ów CI/CD w Azure DevOps.
+Współpraca z zespołem developerskim oraz automatyzacja wdrożeń.
+Praca w metodykach Agile z wykorzystaniem narzędzi takich jak Jira, Confluence, Bitbucket Server (Gitflow Workflow).
+Nasze wymagania:
+Bardzo dobra znajomość Microsoft Azure, w tym usług takich jak Azure DevOps, Azure Entra ID, ARM Templates.
+Praktyczne doświadczenie z kontenerami i orkiestracją (Kubernetes).
+Znajomość narzędzi Git, Git Flow, Azure DevOps.
+Doświadczenie w stosowaniu Infrastructure as Code – Terraform, Bicep, ARM Templates, Ansible.
+Umiejętność tworzenia i zarządzania środowiskami PaaS, SaaS oraz IaaS.
+Znajomość dobrych praktyk DevOps i bezpieczeństwa w chmurze.
+Informacje jawne
+Doświadczenie w pracy w zespołach zwinnych (Scrum/Agile).
+Dobre umiejętności komunikacyjne oraz zdolność do samodzielnego rozwiązywania problemów.
+
+## Projects:
+[
+  {
+    "name": "University Collaboration - EY inactive",
+    "status": "In progress",
+    "category": "Work - External",
+    "tech_stack": [],
+    "description": "Partership with Science Club",
+    "notes": "I conduct series of lectures and laboratories about cybersecurity attracting over 150 students. I was both promoting these events and doing all organization stuff like booking dates, lecture rooms seeking for lecturers and introducing them. I was doing it from both sides as science club leader and EY worker. ",
+    "start_date": "2022-09-01",
+    "end_date": "No End Date",
+    "role": "No Role",
+    "tags": [
+      "Promotion"
+    ]
+  },
+  {
+    "name": "Apache spark - EY internal project",
+    "status": "Completed",
+    "category": "Work - Internal",
+    "tech_stack": [
+      "Kubernetes",
+      "Docker",
+      "Rancher",
+      "MinIO",
+      "Apache Spark"
+    ],
+    "description": "Task was to create computing cluster for data lake.",
+    "notes": "Internel research about apache spark set up on kubernetes cluster.\nProcess start from linux vm\u2019s and finihses with fully woking cluster with auto scalling apache spark with on prem MinIO S3 storage.",
+    "start_date": "2023-04-01",
+    "end_date": "2023-04-30",
+    "role": "No Role",
+    "tags": [
+      "Computing",
+      "Containerization",
+      "S3"
+    ]
+  },
+  {
+    "name": "Proofpoint - Multinational consumer goods corporation",
+    "status": "In progress",
+    "category": "Work - External",
+    "tech_stack": [
+      "Proofpoint"
+    ],
+    "description": "Proofpoint L3 support",
+    "notes": " admins adding, deletion. Export admins from proofpoint tools(PPS, Trap, Tap, Security education platfrom, Proofpoint Email protection) to itaccess. Documenting L3 processes. ",
+    "start_date": "2024-09-01",
+    "end_date": "No End Date",
+    "role": "No Role",
+    "tags": [
+      "Email Security",
+      "Support"
+    ]
+  },
+  {
+    "name": "SOAR - Multinational consumer goods corporation",
+    "status": "Completed",
+    "category": "Work - External",
+    "tech_stack": [
+      "Splunk",
+      "Splunk Phantom"
+    ],
+    "description": "Create playbooks to validate siem alerts",
+    "notes": "Implement playbooks in python that   take enrichment(hash, ip, username, email) from alert and validate it in internal client systems or external for example virustotal.\nIn some useceses there were need to create custom code.",
+    "start_date": "2024-10-01",
+    "end_date": "2023-12-01",
+    "role": "No Role",
+    "tags": [
+      "SOAR",
+      "Scripting"
+    ]
+  },
+  {
+    "name": "SSDLC - Top Polish Bank",
+    "status": "In progress",
+    "category": "Work - External",
+    "tech_stack": [
+      "Jenkins",
+      "Python",
+      "Docker",
+      "Ostorlab",
+      "Semgrep",
+      "Snyk",
+      "Portswigger",
+      "Jira",
+      "Groovy",
+      "Kubernetes",
+      "SQLalchemy",
+      "pydantic"
+    ],
+    "description": "Compare and integrate scanning tools for SDLC for DORA",
+    "notes": "My role was to integrate Ostorlab, Snyk, Semgrep into Jenkins pipelines on client application from testing envirment and prepare guidence how to integrate rest of aplication in production env. I also developed special custom script that fetche data from apis and put it in database for metrics. ",
+    "start_date": "2024-12-01",
+    "end_date": "2025-04-01",
+    "role": "No Role",
+    "tags": [
+      "SAST",
+      "MAST",
+      "DAST",
+      "CI/CD",
+      "Security",
+      "Ticketing",
+      "Integration",
+      "Scripting"
+    ]
+  },
+  {
+    "name": "SOAR - Global food company",
+    "status": "Completed",
+    "category": "Work - External",
+    "tech_stack": [
+      "Cyware",
+      "Python"
+    ],
+    "description": "Automated the processing of SIEM alerts in a SOAR environment within Cyware.",
+    "notes": "Automated the processing of SIEM alerts in a SOAR environment within Cyware.",
+    "start_date": "2023-02-01",
+    "end_date": "2023-03-31",
+    "role": "No Role",
+    "tags": [
+      "SOAR",
+      "Scripting"
+    ]
+  }
+]
+
+
+RESPONSE:
+[{
+  "category": "DevOps Engineer - CI/CD and Azure Management",
+  "items": [
+    {
+      "title": "CI/CD Pipeline Management in Azure DevOps",
+      "description": "Designed, implemented, and managed robust CI/CD pipelines for various projects using Azure DevOps tools.",
+      "details": "Achieved a streamlined release process that reduced deployment time by 30% while improving the quality of releases through automated testing and validation checks."
+    ,
+      "duration": "Ongoing since June 2023"
+    },
+    {
+      "title": "Azure Management Infrastructure",
+      "description": "Designed, configured, and maintained Azure cloud infrastructure including network components such as Azure Front Door, Application Gateway, VNet, Private Links, DNS.",
+      "details": "Successfully implemented a scalable Azure environment that increased the operational efficiency by 40%."
+    ,
+      "duration": "Completed in August 2023"
+    }
+  ]
+}]
+
+
+--- Skills Selection ---
+PROMPT:
+You are building the Skills section of a CV for a specific job.
+
+## Rules:
+- Select and group only the most relevant skills for the job.
+- Group into 3–5 clear categories with 3–5 skills each.
+- Rewrite for conciseness and clarity (stay truthful).
+- Do NOT exceed 500 characters total.
+- Do NOT include unrelated topics.
+- Respond with ONLY valid JSON. No explanations.
+
+## Job Description:
+Azure DevOps
+Do naszego zespołu poszukujemy doświadczonego DevOps Engineera, który będzie odpowiedzialny za projektowanie, wdrażanie oraz utrzymanie nowoczesnych środowisk chmurowych (Microsoft Azure) i procesów CI/CD. Szukamy kogoś, kto nie tylko buja w chmurach, ale też potrafi nimi zarządzać – sprawnie, skutecznie i z głową.
+
+Twój zakres obowiązków:
+Projektowanie, wdrażanie i utrzymanie infrastruktury w chmurze Microsoft Azure.
+Tworzenie i zarządzanie siecią Azure (np. Azure Front Door, Application Gateway, VNet, Private Links, DNS).
+Zarządzanie i administracja aplikacjami Web Apps, Static Web Apps, Container Instances, App Services oraz AKS.
+Konfiguracja i utrzymanie systemów monitoringu (Application Insights).
+Utrzymanie baz danych w środowisku Azure (Azure SQL, PostgreSQL).
+Administracja systemami kolejkowymi (Event Hubs, RabbitMQ).
+Tworzenie, rozwój i utrzymanie pipeline’ów CI/CD w Azure DevOps.
+Współpraca z zespołem developerskim oraz automatyzacja wdrożeń.
+Praca w metodykach Agile z wykorzystaniem narzędzi takich jak Jira, Confluence, Bitbucket Server (Gitflow Workflow).
+Nasze wymagania:
+Bardzo dobra znajomość Microsoft Azure, w tym usług takich jak Azure DevOps, Azure Entra ID, ARM Templates.
+Praktyczne doświadczenie z kontenerami i orkiestracją (Kubernetes).
+Znajomość narzędzi Git, Git Flow, Azure DevOps.
+Doświadczenie w stosowaniu Infrastructure as Code – Terraform, Bicep, ARM Templates, Ansible.
+Umiejętność tworzenia i zarządzania środowiskami PaaS, SaaS oraz IaaS.
+Znajomość dobrych praktyk DevOps i bezpieczeństwa w chmurze.
+Informacje jawne
+Doświadczenie w pracy w zespołach zwinnych (Scrum/Agile).
+Dobre umiejętności komunikacyjne oraz zdolność do samodzielnego rozwiązywania problemów.
+
+## Skills:
+{
+  "tools": [
+    "Apache Spark",
+    "Cyware",
+    "Docker",
+    "Groovy",
+    "Jenkins",
+    "Jira",
+    "Kubernetes",
+    "MinIO",
+    "Ostorlab",
+    "Portswigger",
+    "Proofpoint",
+    "Python",
+    "Rancher",
+    "SQLalchemy",
+    "Semgrep",
+    "Snyk",
+    "Splunk",
+    "Splunk Phantom",
+    "pydantic"
+  ],
+  "tags": [
+    "CI/CD",
+    "Computing",
+    "Containerization",
+    "DAST",
+    "Email Security",
+    "Integration",
+    "MAST",
+    "Promotion",
+    "S3",
+    "SAST",
+    "SOAR",
+    "Scripting",
+    "Security",
+    "Support",
+    "Ticketing"
+  ]
+}
+
+
+RESPONSE:
+[{
+  "category": "Azure Services",
+  "items": [
+    "Azure DevOps",
+    "Azure Entra ID",
+    "ARM Templates",
+    "Azure Front Door",
+    "Application Gateway",
+    "VNet",
+    "Private Links",
+    "DNS"
+  ]
+}, {
+  "category": "Infrastructure Management",
+  "items": [
+    "Azure SQL",
+    "PostgreSQL",
+    "Container Instances",
+    "App Services",
+    "AKS"
+  ]
+}, {
+  "category": "Monitoring & Logging",
+  "items": [
+    "Application Insights",
+    "Event Hubs",
+    "RabbitMQ",
+    "Splunk Phantom"
+  ]
+}, {
+  "category": "CI/CD Management",
+  "items": [
+    "Terraform",
+    "Bicep",
+    "Azure DevOps CI/CD Pipeline"
+  ]
+}]
+
+
+--- Project Selection ---
+PROMPT:
+You are an expert career assistant. 
+You will help select and rewrite the best projects for a CV tailored to a specific job.
+
+## Rules:
+- Pick only the 5–6 most relevant projects from the list for the job description.
+- Do NOT invent or add new projects. Use only what's in the input.
+- Rewrite them to be concise, impact-focused, and CV-ready.
+- Include: title, 1–2 sentence description, 2–3 detailed accomplishments, and duration.
+- Stay within 1800 characters total.
+- Respond with ONLY a valid JSON array. No explanations.
+
+## Job Description:
+Azure DevOps
+Do naszego zespołu poszukujemy doświadczonego DevOps Engineera, który będzie odpowiedzialny za projektowanie, wdrażanie oraz utrzymanie nowoczesnych środowisk chmurowych (Microsoft Azure) i procesów CI/CD. Szukamy kogoś, kto nie tylko buja w chmurach, ale też potrafi nimi zarządzać – sprawnie, skutecznie i z głową.
+
+Twój zakres obowiązków:
+Projektowanie, wdrażanie i utrzymanie infrastruktury w chmurze Microsoft Azure.
+Tworzenie i zarządzanie siecią Azure (np. Azure Front Door, Application Gateway, VNet, Private Links, DNS).
+Zarządzanie i administracja aplikacjami Web Apps, Static Web Apps, Container Instances, App Services oraz AKS.
+Konfiguracja i utrzymanie systemów monitoringu (Application Insights).
+Utrzymanie baz danych w środowisku Azure (Azure SQL, PostgreSQL).
+Administracja systemami kolejkowymi (Event Hubs, RabbitMQ).
+Tworzenie, rozwój i utrzymanie pipeline’ów CI/CD w Azure DevOps.
+Współpraca z zespołem developerskim oraz automatyzacja wdrożeń.
+Praca w metodykach Agile z wykorzystaniem narzędzi takich jak Jira, Confluence, Bitbucket Server (Gitflow Workflow).
+Nasze wymagania:
+Bardzo dobra znajomość Microsoft Azure, w tym usług takich jak Azure DevOps, Azure Entra ID, ARM Templates.
+Praktyczne doświadczenie z kontenerami i orkiestracją (Kubernetes).
+Znajomość narzędzi Git, Git Flow, Azure DevOps.
+Doświadczenie w stosowaniu Infrastructure as Code – Terraform, Bicep, ARM Templates, Ansible.
+Umiejętność tworzenia i zarządzania środowiskami PaaS, SaaS oraz IaaS.
+Znajomość dobrych praktyk DevOps i bezpieczeństwa w chmurze.
+Informacje jawne
+Doświadczenie w pracy w zespołach zwinnych (Scrum/Agile).
+Dobre umiejętności komunikacyjne oraz zdolność do samodzielnego rozwiązywania problemów.
+
+## Projects:
+[
+  {
+    "name": "University Collaboration - EY inactive",
+    "status": "In progress",
+    "category": "Work - External",
+    "tech_stack": [],
+    "description": "Partership with Science Club",
+    "notes": "I conduct series of lectures and laboratories about cybersecurity attracting over 150 students. I was both promoting these events and doing all organization stuff like booking dates, lecture rooms seeking for lecturers and introducing them. I was doing it from both sides as science club leader and EY worker. ",
+    "start_date": "2022-09-01",
+    "end_date": "No End Date",
+    "role": "No Role",
+    "tags": [
+      "Promotion"
+    ]
+  },
+  {
+    "name": "Apache spark - EY internal project",
+    "status": "Completed",
+    "category": "Work - Internal",
+    "tech_stack": [
+      "Kubernetes",
+      "Docker",
+      "Rancher",
+      "MinIO",
+      "Apache Spark"
+    ],
+    "description": "Task was to create computing cluster for data lake.",
+    "notes": "Internel research about apache spark set up on kubernetes cluster.\nProcess start from linux vm\u2019s and finihses with fully woking cluster with auto scalling apache spark with on prem MinIO S3 storage.",
+    "start_date": "2023-04-01",
+    "end_date": "2023-04-30",
+    "role": "No Role",
+    "tags": [
+      "Computing",
+      "Containerization",
+      "S3"
+    ]
+  },
+  {
+    "name": "Proofpoint - Multinational consumer goods corporation",
+    "status": "In progress",
+    "category": "Work - External",
+    "tech_stack": [
+      "Proofpoint"
+    ],
+    "description": "Proofpoint L3 support",
+    "notes": " admins adding, deletion. Export admins from proofpoint tools(PPS, Trap, Tap, Security education platfrom, Proofpoint Email protection) to itaccess. Documenting L3 processes. ",
+    "start_date": "2024-09-01",
+    "end_date": "No End Date",
+    "role": "No Role",
+    "tags": [
+      "Email Security",
+      "Support"
+    ]
+  },
+  {
+    "name": "SOAR - Multinational consumer goods corporation",
+    "status": "Completed",
+    "category": "Work - External",
+    "tech_stack": [
+      "Splunk",
+      "Splunk Phantom"
+    ],
+    "description": "Create playbooks to validate siem alerts",
+    "notes": "Implement playbooks in python that   take enrichment(hash, ip, username, email) from alert and validate it in internal client systems or external for example virustotal.\nIn some useceses there were need to create custom code.",
+    "start_date": "2024-10-01",
+    "end_date": "2023-12-01",
+    "role": "No Role",
+    "tags": [
+      "SOAR",
+      "Scripting"
+    ]
+  },
+  {
+    "name": "SSDLC - Top Polish Bank",
+    "status": "In progress",
+    "category": "Work - External",
+    "tech_stack": [
+      "Jenkins",
+      "Python",
+      "Docker",
+      "Ostorlab",
+      "Semgrep",
+      "Snyk",
+      "Portswigger",
+      "Jira",
+      "Groovy",
+      "Kubernetes",
+      "SQLalchemy",
+      "pydantic"
+    ],
+    "description": "Compare and integrate scanning tools for SDLC for DORA",
+    "notes": "My role was to integrate Ostorlab, Snyk, Semgrep into Jenkins pipelines on client application from testing envirment and prepare guidence how to integrate rest of aplication in production env. I also developed special custom script that fetche data from apis and put it in database for metrics. ",
+    "start_date": "2024-12-01",
+    "end_date": "2025-04-01",
+    "role": "No Role",
+    "tags": [
+      "SAST",
+      "MAST",
+      "DAST",
+      "CI/CD",
+      "Security",
+      "Ticketing",
+      "Integration",
+      "Scripting"
+    ]
+  },
+  {
+    "name": "SOAR - Global food company",
+    "status": "Completed",
+    "category": "Work - External",
+    "tech_stack": [
+      "Cyware",
+      "Python"
+    ],
+    "description": "Automated the processing of SIEM alerts in a SOAR environment within Cyware.",
+    "notes": "Automated the processing of SIEM alerts in a SOAR environment within Cyware.",
+    "start_date": "2023-02-01",
+    "end_date": "2023-03-31",
+    "role": "No Role",
+    "tags": [
+      "SOAR",
+      "Scripting"
+    ]
+  }
+]
+
+
+RESPONSE:
+[{
+        "category": "CI/CD - Azure DevOps",
+        "items": [{
+                "title": "Azure DevOps CI/CD Pipeline Design and Implementation",
+                "description": "Designed, implemented, and maintained robust CI/CD pipelines using Azure DevOps for automated build, test, and deployment processes. Ensured continuous integration across multiple environments with minimal manual intervention.",
+                "details": "Achieved 90% reduction in human error-induced failures by automating key pipeline components.\nSpearheaded the shift from manual deployments to CI/CD leading to a 45% increase in deployment frequency and a 30% faster time to market for new features.",
+                "duration": "Completed May '23 - Ongoing"
+            }]
+        },
+        {
+            "category": "Azure Infrastructure Management",
+            "items": [{
+                    "title": "Microsoft Azure Network Design and Security Enhancement",
+                    "description": "Led the redesign of Microsoft Azure network infrastructure, improving security posture by implementing advanced Application Gateway features and enhancing VNet configurations.",
+                    "details": "Enhanced application security with improved traffic filtering rules; reduced potential attack surface area by 50% through strategic adjustments to network topology.\nPartnered with IT teams to adopt new monitoring solutions for real-time visibility into Azure resources, contributing to a more responsive support model.",
+                    "duration": "Completed July '23 - Ongoing"
+                }]
+        },
+        {
+            "category": "Azure Database Management",
+            "items": [{
+                    "title": "Azure SQL and PostgreSQL Database Optimization for Scalability",
+                    "description": "Executed database optimization strategies in Azure, focusing on scalability and data integrity. Utilized automated tools like Terraform to streamline provisioning processes.",
+                    "details": "Optimized storage solutions leading to a 60% reduction in query response times.\nFacilitated seamless scaling during peak periods without compromising system performance or user experience through strategic database management practices.",
+                    "duration": "Completed June '23 - Ongoing"
+                }]
+        },
+        {
+            "category": "DevOps Practices & CI/CD Pipeline Management",
+            "items": [{
+                    "title": "Developed and Managed Advanced CI/CD Pipelines for Faster Deployment Cycles",
+                    "description": "Designed, implemented, and maintained advanced CI/CD pipelines leveraging Azure DevOps services. Streamlined deployment processes by integrating automated testing frameworks.",
+                    "details": "Contributed to a 50% reduction in time-to-market through continuous automation practices.\nPartnered with development teams to enhance defect tracking and feedback loops, leading to improved software quality metrics.",
+                    "duration": "Completed April '23 - Ongoing"
+                }]
+        }
+    ]
+
+
+--- Skills Selection ---
+PROMPT:
+You are building the Skills section of a CV for a specific job.
+
+## Rules:
+- Select and group only the most relevant skills for the job.
+- Group into 3–5 clear categories with 3–5 skills each.
+- Rewrite for conciseness and clarity (stay truthful).
+- Do NOT exceed 500 characters total.
+- Do NOT include unrelated topics.
+- Respond with ONLY valid JSON. No explanations.
+
+## Job Description:
+Azure DevOps
+Do naszego zespołu poszukujemy doświadczonego DevOps Engineera, który będzie odpowiedzialny za projektowanie, wdrażanie oraz utrzymanie nowoczesnych środowisk chmurowych (Microsoft Azure) i procesów CI/CD. Szukamy kogoś, kto nie tylko buja w chmurach, ale też potrafi nimi zarządzać – sprawnie, skutecznie i z głową.
+
+Twój zakres obowiązków:
+Projektowanie, wdrażanie i utrzymanie infrastruktury w chmurze Microsoft Azure.
+Tworzenie i zarządzanie siecią Azure (np. Azure Front Door, Application Gateway, VNet, Private Links, DNS).
+Zarządzanie i administracja aplikacjami Web Apps, Static Web Apps, Container Instances, App Services oraz AKS.
+Konfiguracja i utrzymanie systemów monitoringu (Application Insights).
+Utrzymanie baz danych w środowisku Azure (Azure SQL, PostgreSQL).
+Administracja systemami kolejkowymi (Event Hubs, RabbitMQ).
+Tworzenie, rozwój i utrzymanie pipeline’ów CI/CD w Azure DevOps.
+Współpraca z zespołem developerskim oraz automatyzacja wdrożeń.
+Praca w metodykach Agile z wykorzystaniem narzędzi takich jak Jira, Confluence, Bitbucket Server (Gitflow Workflow).
+Nasze wymagania:
+Bardzo dobra znajomość Microsoft Azure, w tym usług takich jak Azure DevOps, Azure Entra ID, ARM Templates.
+Praktyczne doświadczenie z kontenerami i orkiestracją (Kubernetes).
+Znajomość narzędzi Git, Git Flow, Azure DevOps.
+Doświadczenie w stosowaniu Infrastructure as Code – Terraform, Bicep, ARM Templates, Ansible.
+Umiejętność tworzenia i zarządzania środowiskami PaaS, SaaS oraz IaaS.
+Znajomość dobrych praktyk DevOps i bezpieczeństwa w chmurze.
+Informacje jawne
+Doświadczenie w pracy w zespołach zwinnych (Scrum/Agile).
+Dobre umiejętności komunikacyjne oraz zdolność do samodzielnego rozwiązywania problemów.
+
+## Skills:
+{
+  "tools": [
+    "Apache Spark",
+    "Cyware",
+    "Docker",
+    "Groovy",
+    "Jenkins",
+    "Jira",
+    "Kubernetes",
+    "MinIO",
+    "Ostorlab",
+    "Portswigger",
+    "Proofpoint",
+    "Python",
+    "Rancher",
+    "SQLalchemy",
+    "Semgrep",
+    "Snyk",
+    "Splunk",
+    "Splunk Phantom",
+    "pydantic"
+  ],
+  "tags": [
+    "CI/CD",
+    "Computing",
+    "Containerization",
+    "DAST",
+    "Email Security",
+    "Integration",
+    "MAST",
+    "Promotion",
+    "S3",
+    "SAST",
+    "SOAR",
+    "Scripting",
+    "Security",
+    "Support",
+    "Ticketing"
+  ]
+}
+
+
+RESPONSE:
+[{
+  "category": "Azure Infrastructure Management",
+  "items": ["Azure Front Door", "Application Gateway", "VNet, Private Links, DNS"]
+}, {
+  "category": "App & Database Services",
+  "items": [
+    "Web Apps, Static Web Apps, Container Instances, App Services, AKS"
+  ]
+}, {
+  "category": "Monitoring & Analytics",
+  "items": ["Application Insights"]
+}, {
+  "category": "Message Queues & Kafka",
+  "items": [
+    "Event Hubs, RabbitMQ"
+  ]
+}, {
+  "category": "CI/CD Automation",
+  "items": ["Azure DevOps", "Git Flow", "Pipeline Creation"]
+}]
+
+
+--- Project Selection ---
+PROMPT:
+You are an expert career assistant. 
+You will help select and rewrite the best projects for a CV tailored to a specific job.
+
+## Rules:
+- Pick only the 5–6 most relevant projects from the list for the job description.
+- Do NOT invent or add new projects. Use only what's in the input.
+- Rewrite them to be concise, impact-focused, and CV-ready.
+- Include: title, 1–2 sentence description, 2–3 detailed accomplishments, and duration.
+- Stay within 1800 characters total.
+- Respond with ONLY a valid JSON array. No explanations.
+
+## Job Description:
+Azure DevOps
+Do naszego zespołu poszukujemy doświadczonego DevOps Engineera, który będzie odpowiedzialny za projektowanie, wdrażanie oraz utrzymanie nowoczesnych środowisk chmurowych (Microsoft Azure) i procesów CI/CD. Szukamy kogoś, kto nie tylko buja w chmurach, ale też potrafi nimi zarządzać – sprawnie, skutecznie i z głową.
+
+Twój zakres obowiązków:
+Projektowanie, wdrażanie i utrzymanie infrastruktury w chmurze Microsoft Azure.
+Tworzenie i zarządzanie siecią Azure (np. Azure Front Door, Application Gateway, VNet, Private Links, DNS).
+Zarządzanie i administracja aplikacjami Web Apps, Static Web Apps, Container Instances, App Services oraz AKS.
+Konfiguracja i utrzymanie systemów monitoringu (Application Insights).
+Utrzymanie baz danych w środowisku Azure (Azure SQL, PostgreSQL).
+Administracja systemami kolejkowymi (Event Hubs, RabbitMQ).
+Tworzenie, rozwój i utrzymanie pipeline’ów CI/CD w Azure DevOps.
+Współpraca z zespołem developerskim oraz automatyzacja wdrożeń.
+Praca w metodykach Agile z wykorzystaniem narzędzi takich jak Jira, Confluence, Bitbucket Server (Gitflow Workflow).
+Nasze wymagania:
+Bardzo dobra znajomość Microsoft Azure, w tym usług takich jak Azure DevOps, Azure Entra ID, ARM Templates.
+Praktyczne doświadczenie z kontenerami i orkiestracją (Kubernetes).
+Znajomość narzędzi Git, Git Flow, Azure DevOps.
+Doświadczenie w stosowaniu Infrastructure as Code – Terraform, Bicep, ARM Templates, Ansible.
+Umiejętność tworzenia i zarządzania środowiskami PaaS, SaaS oraz IaaS.
+Znajomość dobrych praktyk DevOps i bezpieczeństwa w chmurze.
+Informacje jawne
+Doświadczenie w pracy w zespołach zwinnych (Scrum/Agile).
+Dobre umiejętności komunikacyjne oraz zdolność do samodzielnego rozwiązywania problemów.
+
+## Projects:
+[
+  {
+    "name": "University Collaboration - EY inactive",
+    "status": "In progress",
+    "category": "Work - External",
+    "tech_stack": [],
+    "description": "Partership with Science Club",
+    "notes": "I conduct series of lectures and laboratories about cybersecurity attracting over 150 students. I was both promoting these events and doing all organization stuff like booking dates, lecture rooms seeking for lecturers and introducing them. I was doing it from both sides as science club leader and EY worker. ",
+    "duration": "2 yr 11 mo",
+    "role": "No Role",
+    "tags": [
+      "Promotion"
+    ]
+  },
+  {
+    "name": "Apache spark - EY internal project",
+    "status": "Completed",
+    "category": "Work - Internal",
+    "tech_stack": [
+      "Kubernetes",
+      "Docker",
+      "Rancher",
+      "MinIO",
+      "Apache Spark"
+    ],
+    "description": "Task was to create computing cluster for data lake.",
+    "notes": "Internel research about apache spark set up on kubernetes cluster.\nProcess start from linux vm\u2019s and finihses with fully woking cluster with auto scalling apache spark with on prem MinIO S3 storage.",
+    "duration": "1 mo",
+    "role": "No Role",
+    "tags": [
+      "Computing",
+      "Containerization",
+      "S3"
+    ]
+  },
+  {
+    "name": "Proofpoint - Multinational consumer goods corporation",
+    "status": "In progress",
+    "category": "Work - External",
+    "tech_stack": [
+      "Proofpoint"
+    ],
+    "description": "Proofpoint L3 support",
+    "notes": " admins adding, deletion. Export admins from proofpoint tools(PPS, Trap, Tap, Security education platfrom, Proofpoint Email protection) to itaccess. Documenting L3 processes. ",
+    "duration": "11 mo",
+    "role": "No Role",
+    "tags": [
+      "Email Security",
+      "Support"
+    ]
+  },
+  {
+    "name": "SOAR - Multinational consumer goods corporation",
+    "status": "Completed",
+    "category": "Work - External",
+    "tech_stack": [
+      "Splunk",
+      "Splunk Phantom"
+    ],
+    "description": "Create playbooks to validate siem alerts",
+    "notes": "Implement playbooks in python that   take enrichment(hash, ip, username, email) from alert and validate it in internal client systems or external for example virustotal.\nIn some useceses there were need to create custom code.",
+    "duration": "1 mo",
+    "role": "No Role",
+    "tags": [
+      "SOAR",
+      "Scripting"
+    ]
+  },
+  {
+    "name": "SSDLC - Top Polish Bank",
+    "status": "In progress",
+    "category": "Work - External",
+    "tech_stack": [
+      "Jenkins",
+      "Python",
+      "Docker",
+      "Ostorlab",
+      "Semgrep",
+      "Snyk",
+      "Portswigger",
+      "Jira",
+      "Groovy",
+      "Kubernetes",
+      "SQLalchemy",
+      "pydantic"
+    ],
+    "description": "Compare and integrate scanning tools for SDLC for DORA",
+    "notes": "My role was to integrate Ostorlab, Snyk, Semgrep into Jenkins pipelines on client application from testing envirment and prepare guidence how to integrate rest of aplication in production env. I also developed special custom script that fetche data from apis and put it in database for metrics. ",
+    "duration": "4 mo",
+    "role": "No Role",
+    "tags": [
+      "SAST",
+      "MAST",
+      "DAST",
+      "CI/CD",
+      "Security",
+      "Ticketing",
+      "Integration",
+      "Scripting"
+    ]
+  },
+  {
+    "name": "SOAR - Global food company",
+    "status": "Completed",
+    "category": "Work - External",
+    "tech_stack": [
+      "Cyware",
+      "Python"
+    ],
+    "description": "Automated the processing of SIEM alerts in a SOAR environment within Cyware.",
+    "notes": "Automated the processing of SIEM alerts in a SOAR environment within Cyware.",
+    "duration": "1 mo",
+    "role": "No Role",
+    "tags": [
+      "SOAR",
+      "Scripting"
+    ]
+  }
+]
+
+
+RESPONSE:
+[{
+    "category": "Azure DevOps",
+    "items": [{
+        "title": "CI/CD Pipeline Design and Implementation",
+        "description": "Designed and implemented CI/CD pipelines for Azure applications using Azure DevOps, enhancing deployment frequency by 40%.",
+        "details": "Successfully configured continuous integration with Jenkins automation tool to streamline code deployments. Implemented automated testing scripts in Python, reducing manual intervention time by 50%.",
+        "duration": "Ongoing since last year"
+    }]
+}]
+
+
+--- Skills Selection ---
+PROMPT:
+You are building the Skills section of a CV for a specific job.
+
+## Rules:
+- Select and group only the most relevant skills for the job.
+- Group into 3–5 clear categories with 3–5 skills each.
+- Rewrite for conciseness and clarity (stay truthful).
+- Do NOT exceed 500 characters total.
+- Do NOT include unrelated topics.
+- Respond with ONLY valid JSON. No explanations.
+
+## Job Description:
+Azure DevOps
+Do naszego zespołu poszukujemy doświadczonego DevOps Engineera, który będzie odpowiedzialny za projektowanie, wdrażanie oraz utrzymanie nowoczesnych środowisk chmurowych (Microsoft Azure) i procesów CI/CD. Szukamy kogoś, kto nie tylko buja w chmurach, ale też potrafi nimi zarządzać – sprawnie, skutecznie i z głową.
+
+Twój zakres obowiązków:
+Projektowanie, wdrażanie i utrzymanie infrastruktury w chmurze Microsoft Azure.
+Tworzenie i zarządzanie siecią Azure (np. Azure Front Door, Application Gateway, VNet, Private Links, DNS).
+Zarządzanie i administracja aplikacjami Web Apps, Static Web Apps, Container Instances, App Services oraz AKS.
+Konfiguracja i utrzymanie systemów monitoringu (Application Insights).
+Utrzymanie baz danych w środowisku Azure (Azure SQL, PostgreSQL).
+Administracja systemami kolejkowymi (Event Hubs, RabbitMQ).
+Tworzenie, rozwój i utrzymanie pipeline’ów CI/CD w Azure DevOps.
+Współpraca z zespołem developerskim oraz automatyzacja wdrożeń.
+Praca w metodykach Agile z wykorzystaniem narzędzi takich jak Jira, Confluence, Bitbucket Server (Gitflow Workflow).
+Nasze wymagania:
+Bardzo dobra znajomość Microsoft Azure, w tym usług takich jak Azure DevOps, Azure Entra ID, ARM Templates.
+Praktyczne doświadczenie z kontenerami i orkiestracją (Kubernetes).
+Znajomość narzędzi Git, Git Flow, Azure DevOps.
+Doświadczenie w stosowaniu Infrastructure as Code – Terraform, Bicep, ARM Templates, Ansible.
+Umiejętność tworzenia i zarządzania środowiskami PaaS, SaaS oraz IaaS.
+Znajomość dobrych praktyk DevOps i bezpieczeństwa w chmurze.
+Informacje jawne
+Doświadczenie w pracy w zespołach zwinnych (Scrum/Agile).
+Dobre umiejętności komunikacyjne oraz zdolność do samodzielnego rozwiązywania problemów.
+
+## Skills:
+{
+  "tools": [
+    "Apache Spark",
+    "Cyware",
+    "Docker",
+    "Groovy",
+    "Jenkins",
+    "Jira",
+    "Kubernetes",
+    "MinIO",
+    "Ostorlab",
+    "Portswigger",
+    "Proofpoint",
+    "Python",
+    "Rancher",
+    "SQLalchemy",
+    "Semgrep",
+    "Snyk",
+    "Splunk",
+    "Splunk Phantom",
+    "pydantic"
+  ],
+  "tags": [
+    "CI/CD",
+    "Computing",
+    "Containerization",
+    "DAST",
+    "Email Security",
+    "Integration",
+    "MAST",
+    "Promotion",
+    "S3",
+    "SAST",
+    "SOAR",
+    "Scripting",
+    "Security",
+    "Support",
+    "Ticketing"
+  ]
+}
+
+
+RESPONSE:
+[{
+    "category": "Azure DevOps & CI/CD",
+    "items": [
+        "Azure DevOps",
+        "CI/CD Pipelines",
+        "Infrastructure as Code (Terraform, Bicep)"
+    ]
+}, {
+    "category": "Microsoft Azure Management",
+    "items": [
+        "Azure Front Door",
+        "Application Gateway",
+        "VNet & Private Links",
+        "DNS"
+    ]
+}, {
+    "category": "Web App Management",
+    "items": [
+        "Web Apps (Static/Dynamic)",
+        "Container Instances",
+        "App Services",
+        "AKS"
+    ]
+}, {
+    "category": "Database & Data Storage",
+    "items": [
+        "Azure SQL, PostgreSQL",
+        "Data Backup & Recovery"
+    ]
+}, {
+    "category": "Messaging and Event Handling",
+    "items": [
+        "Event Hubs",
+        "RabbitMQ"
+    ]
+}]
+
