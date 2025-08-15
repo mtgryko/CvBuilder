@@ -64,6 +64,48 @@ class EducationClient(NotionClient):
             education.append(edu_entry)
         return education
 
+    def transform_for_latex(self, data: List[EducationModel | dict]) -> List[dict]:
+        """Transform education models into LaTeX-friendly dictionaries."""
+        transformed = []
+        for entry in data:
+            edu = EducationModel(**entry) if isinstance(entry, dict) else entry
+
+            degree_parts = []
+            if edu.level:
+                degree_parts.append(edu.level)
+            if edu.field:
+                degree_parts.append(f"in {edu.field}")
+            degree = " ".join(degree_parts).strip()
+
+            details_parts = []
+            if edu.specialization:
+                details_parts.append(f"Specialization in {edu.specialization}")
+            if edu.duration_years:
+                years = (
+                    int(edu.duration_years)
+                    if isinstance(edu.duration_years, float)
+                    and edu.duration_years.is_integer()
+                    else edu.duration_years
+                )
+                details_parts.append(f"[{years} years]")
+            details = " ".join(details_parts).strip()
+
+            dates = ""
+            if edu.start_date or edu.end_date:
+                start = edu.start_date or ""
+                end = edu.end_date or "Present"
+                dates = f"{start} – {end}".strip()
+
+            transformed.append(
+                {
+                    "school": edu.university or "",
+                    "degree": degree,
+                    "details": details,
+                    "dates": dates,
+                }
+            )
+        return transformed
+
     def save(self, data: List[EducationModel]) -> None:
         os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
         with open(DATA_PATH, "w", encoding="utf-8") as f:
