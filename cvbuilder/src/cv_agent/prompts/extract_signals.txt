@@ -3,6 +3,7 @@ Job Description:
 {job_desc}
 
 Return a JSON object with this schema:
+
 {{
   "keywords": ["core technologies or concepts"],
   "tools": ["dev tools or platforms"],
