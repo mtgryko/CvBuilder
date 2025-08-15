@@ -7,25 +7,10 @@ You will help select and rewrite the best projects for a CV tailored to a specif
 - Rewrite them to be concise, impact-focused, and CV-ready.
 - Include: title, 1–2 sentence description, 2–3 detailed accomplishments, and duration.
 - Stay within {max_chars} characters total.
-- Respond with ONLY a valid JSON array in the format below. No explanations.
+- Respond with ONLY a valid JSON array. No explanations.
 
 ## Job Description:
 {job_desc}
 
 ## Projects:
 {projects}
-
-Return JSON:
-[
-  {{
-    "category": "<project category>",
-    "items": [
-      {{
-        "title": "...",
-        "description": "...",
-        "details": "...",
-        "duration": "..."
-      }}
-    ]
-  }}
-]

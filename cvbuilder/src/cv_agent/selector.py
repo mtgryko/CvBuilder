@@ -14,7 +14,6 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 LATEX_DIR = os.path.join(BASE_DIR, "latex_data")
 CONFIG_PATH = os.path.join(BASE_DIR, "src/cv_agent/config.json")
 LOG_FILE = os.path.join(BASE_DIR, "logs/model_responses.log")
-FORMAT_DIR = os.path.join(BASE_DIR, "src/schemas/formats")
 
 
 class CVSelector:
@@ -41,11 +40,6 @@ class CVSelector:
         path = os.path.join(DATA_DIR, filename)
         with open(path, "r") as f:
             return json.load(f)
-
-    def _load_format_hint(self, filename):
-        path = os.path.join(FORMAT_DIR, filename)
-        with open(path, "r") as f:
-            return f.read().strip()
 
     def _save_latex(self, filename, data):
         os.makedirs(LATEX_DIR, exist_ok=True)
@@ -75,7 +69,6 @@ class CVSelector:
             prompt,
             "Project Selection",
             schema=ProjectsSchema,
-            format_hint=self._load_format_hint("projects.json"),
             retries=1,
             log_callback=self._save_debug_log,
         )
@@ -99,7 +92,6 @@ class CVSelector:
             prompt,
             "Skills Selection",
             schema=SkillsSchema,
-            format_hint=self._load_format_hint("skills.json"),
             retries=1,
             log_callback=self._save_debug_log,
         )
