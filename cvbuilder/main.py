@@ -1,4 +1,4 @@
-from src.notion.notion import Notion
+from notion import Notion
 from src.cv_agent.selector import CVSelector
 from src.latex import compile_latex, render_resume, save_tex
 from src.utils.commons import load_json
