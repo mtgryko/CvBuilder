@@ -1,4 +1,4 @@
-from src.notion.projects import extract_project_data
+from notion.projects import Projects
 
 
 def test_extract_project_duration():
@@ -20,7 +20,7 @@ def test_extract_project_duration():
             }
         ]
     }
-    projects = extract_project_data(notion_data)
+    projects = Projects().extract(notion_data)
     assert projects[0].duration == "3 mo"
     dump = projects[0].model_dump()
     assert "start_date" not in dump and "end_date" not in dump
