@@ -3,6 +3,8 @@
 from src.utils.api import NOTION_BASE_HEADERS
 from src.utils.logger import get_logger
 from src.schemas.notion import Project  # <-- use Pydantic model
+from datetime import datetime
+from typing import Optional
 import requests
 import json
 import os
@@ -11,6 +13,28 @@ logger = get_logger("notion-projects")
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 DATA_PATH = os.path.join(BASE_DIR, 'data', 'projects.json')
+
+
+def _compute_duration(start: Optional[str], end: Optional[str]) -> str:
+    """Return human readable duration between two ISO dates."""
+    if not start:
+        return ""
+    try:
+        start_dt = datetime.fromisoformat(start)
+        end_dt = datetime.fromisoformat(end) if end else datetime.now()
+    except (TypeError, ValueError):
+        return ""
+
+    months = (end_dt.year - start_dt.year) * 12 + (end_dt.month - start_dt.month)
+    if months <= 0:
+        months = 1
+    years, months = divmod(months, 12)
+    parts = []
+    if years:
+        parts.append(f"{years} yr")
+    if months:
+        parts.append(f"{months} mo")
+    return " ".join(parts)
 
 def fetch_projects(project_id):
     """Fetch project data from Notion"""
@@ -44,10 +68,11 @@ def extract_project_data(notion_data):
         tech_stack = [t["name"] for t in properties.get("Tech Stack", {}).get("multi_select", [])]
         description = properties.get("Description", {}).get("rich_text", [{}])[0].get("text", {}).get("content", "No Description")
         notes = properties.get("Detailed Notes", {}).get("rich_text", [{}])[0].get("text", {}).get("content", "No Notes")
-        start_date = properties.get("Start Date", {}).get("date", {}).get("start", "No Start Date")
+        start_date = properties.get("Start Date", {}).get("date", {}).get("start")
+        end_prop = properties.get("End Date")
+        end_date = end_prop["date"]["start"] if end_prop and end_prop.get("date") else None
 
-        end_date = properties.get("End Date")
-        end_date = end_date["date"]["start"] if end_date and end_date.get("date") else "No End Date"
+        duration = _compute_duration(start_date, end_date)
 
         role = properties.get("Role", {}).get("select", {}).get("name", "No Role")
         tags = [t["name"] for t in properties.get("Tags", {}).get("multi_select", [])]
@@ -60,10 +85,9 @@ def extract_project_data(notion_data):
             tech_stack=tech_stack,
             description=description,
             notes=notes,
-            start_date=start_date,
-            end_date=end_date,
+            duration=duration,
             role=role,
-            tags=tags
+            tags=tags,
         )
         projects.append(project_entry)
 
