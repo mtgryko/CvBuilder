@@ -1,7 +1,17 @@
 \begin{sectionheader}{Experience}
-{% for job in experience if job.company %}
-  \item \textbf{ {{ job.company | escape_latex }} } \hfill {\emph{ {{ job.dates | escape_latex }} }}\\[-1pt]
-        {\small {{ job.position | escape_latex }}}\\[-2pt]
+{% for job in experience %}
+  {% if job.company or job.position or job.description %}
+  \item \textbf{ {{ job.company | default('Unknown Company') | escape_latex }} } \hfill {\emph{ {{ job.dates | escape_latex }} }}
+  {% if job.position or job.description %}
+  \\[-1pt]
+  {% endif %}
+  {% if job.position %}
+        {\small {{ job.position | escape_latex }}}
+        {% if job.description %}\\[-2pt]{% endif %}
+  {% endif %}
+  {% if job.description %}
         {\footnotesize {{ job.description | escape_latex }}}
+  {% endif %}
+  {% endif %}
 {% endfor %}
 \end{sectionheader}

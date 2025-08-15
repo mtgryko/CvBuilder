@@ -1,7 +1,17 @@
 \begin{sectionheader}{Education}
-{% for school in education if school.school %}
-  \item \textbf{ {{ school.school | escape_latex }} } \hfill {\emph{ {{ school.dates | escape_latex }} }} \\
-        {{ school.degree | escape_latex }} \\[-2pt]
+{% for school in education %}
+  {% if school.school or school.degree or school.details %}
+  \item \textbf{ {{ school.school | default('Unknown School') | escape_latex }} } \hfill {\emph{ {{ school.dates | escape_latex }} }}
+  {% if school.degree or school.details %}
+  \\\\
+  {% endif %}
+  {% if school.degree %}
+        {{ school.degree | escape_latex }}
+        {% if school.details %}\\\\[-2pt]{% endif %}
+  {% endif %}
+  {% if school.details %}
         {\footnotesize {{ school.details | escape_latex }}}
+  {% endif %}
+  {% endif %}
 {% endfor %}
 \end{sectionheader}
