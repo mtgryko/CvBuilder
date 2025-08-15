@@ -16,9 +16,9 @@ Rewrite the project for a CV:
 - Preserve the provided "duration".
 
 Respond ONLY with valid JSON following this schema:
-{
+{{
   "title": "...",
   "description": "...",
   "accomplishments": ["..."],
   "duration": "..."
-}
+}}

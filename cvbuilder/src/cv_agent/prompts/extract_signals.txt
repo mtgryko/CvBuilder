@@ -3,12 +3,13 @@ Job Description:
 {job_desc}
 
 Return a JSON object with this schema:
-{
+
+{{
   "keywords": ["core technologies or concepts"],
   "tools": ["dev tools or platforms"],
   "cloud": ["cloud providers or services"],
   "nice_to_have": ["optional skills"],
-  "weights": {"keywords": 1, "tools": 1, "cloud": 1, "nice_to_have": 0.5}
-}
+  "weights": {{"keywords": 1, "tools": 1, "cloud": 1, "nice_to_have": 0.5}}
+}}
 
 Use lowercase strings. Respond ONLY with valid JSON.
