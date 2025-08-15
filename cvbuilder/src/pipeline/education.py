@@ -2,7 +2,7 @@
 
 import os
 import json
-from src.notion import education as notion_education
+from notion import Education
 from src.utils.commons import load_json
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
@@ -12,7 +12,8 @@ LATEX_DIR = os.path.join(BASE_DIR, "latex_data")
 
 def fetch_raw():
     """Fetch education data from Notion and store raw JSON."""
-    notion_education.run()
+    client = Education()
+    client.sync()
 
 
 def select_relevant():
