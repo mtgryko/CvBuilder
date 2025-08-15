@@ -17,13 +17,15 @@ def fetch_raw():
 
 
 def select_relevant():
-    """Copy raw education data to LaTeX directory."""
+    """Transform raw education data for LaTeX and save."""
     src_path = os.path.join(DATA_DIR, "education.json")
     dst_path = os.path.join(LATEX_DIR, "education.json")
     os.makedirs(LATEX_DIR, exist_ok=True)
-    data = load_json(src_path)
+    raw = load_json(src_path)
+    client = Education()
+    transformed = client.transform_for_latex(raw)
     with open(dst_path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+        json.dump(transformed, f, indent=2, ensure_ascii=False)
 
 
 def render_section():
