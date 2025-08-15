@@ -3,5 +3,6 @@
     "projects": 1800,
     "skills": 500
   },
+  "max_projects": 6,
   "job_description_path": "job_descriptions/job.txt"
 }
