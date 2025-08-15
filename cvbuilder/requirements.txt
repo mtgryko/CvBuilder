@@ -2,4 +2,5 @@ python-dotenv
 requests
 openai
 Jinja2
+pytest
 pydantic>=1.10
