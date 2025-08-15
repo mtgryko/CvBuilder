@@ -1,0 +1,24 @@
+You are writing a resume project entry.
+Job description signals:
+{signals}
+
+Original project data:
+{project}
+
+Allowed terms:
+{allowed_terms}
+
+Rewrite the project for a CV:
+- Only use technology terms present in Allowed terms.
+- Provide a brief "title" and a 1-2 sentence "description".
+- Provide up to 3 bullet "accomplishments".
+- Keep total characters under {max_chars}.
+- Preserve the provided "duration".
+
+Respond ONLY with valid JSON following this schema:
+{{
+  "title": "...",
+  "description": "...",
+  "accomplishments": ["..."],
+  "duration": "..."
+}}
