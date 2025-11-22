@@ -147,7 +147,8 @@ class CVSelector:
         max_total_chars = self.config["max_characters"]["projects"]
 
         signals = self._extract_signals(job_desc)
-        top_projects = self._score_projects(signals, projects, top_n=6)
+        max_projects = self.config.get("max_projects", 6)
+        top_projects = self._score_projects(signals, projects, top_n=max_projects)
         max_per_project = max_total_chars // max(len(top_projects), 1)
 
         rewritten_items: List[Dict] = []
