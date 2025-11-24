@@ -2,7 +2,7 @@
 
 import os
 import json
-from src.notion import education as notion_education
+from notion import Education
 from src.utils.commons import load_json
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
@@ -12,17 +12,20 @@ LATEX_DIR = os.path.join(BASE_DIR, "latex_data")
 
 def fetch_raw():
     """Fetch education data from Notion and store raw JSON."""
-    notion_education.run()
+    client = Education()
+    client.sync()
 
 
 def select_relevant():
-    """Copy raw education data to LaTeX directory."""
+    """Transform raw education data for LaTeX and save."""
     src_path = os.path.join(DATA_DIR, "education.json")
     dst_path = os.path.join(LATEX_DIR, "education.json")
     os.makedirs(LATEX_DIR, exist_ok=True)
-    data = load_json(src_path)
+    raw = load_json(src_path)
+    client = Education()
+    transformed = client.transform_for_latex(raw)
     with open(dst_path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+        json.dump(transformed, f, indent=2, ensure_ascii=False)
 
 
 def render_section():

@@ -53,6 +53,36 @@ class ExperienceClient(NotionClient):
             experiences.append(exp_entry)
         return experiences
 
+    def transform_for_latex(self, data: List[ExperienceModel | dict]) -> List[dict]:
+        """Transform experience models into LaTeX-friendly dictionaries."""
+        transformed = []
+        for entry in data:
+            exp = ExperienceModel(**entry) if isinstance(entry, dict) else entry
+
+            dates = ""
+            if exp.start_date or exp.end_date:
+                start = exp.start_date or ""
+                end = exp.end_date or "Present"
+                dates = f"{start} – {end}".strip()
+
+            desc_parts = []
+            if exp.employment_type:
+                desc_parts.append(exp.employment_type)
+            if exp.duration:
+                desc_parts.append(exp.duration)
+            description = " – ".join(desc_parts).strip()
+
+            transformed.append(
+                {
+                    "company": exp.company or "",
+                    "position": exp.role or "",
+                    "description": description,
+                    "dates": dates,
+                }
+            )
+
+        return transformed
+
     def save(self, data: List[ExperienceModel]) -> None:
         os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
         with open(DATA_PATH, "w", encoding="utf-8") as f:

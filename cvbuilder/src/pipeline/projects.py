@@ -1,7 +1,7 @@
 """Pipeline utilities for building the projects section."""
 
 import os
-from src.notion import projects as notion_projects
+from notion import Projects
 from src.cv_agent.selector import CVSelector
 from src.utils.commons import load_json
 
@@ -11,7 +11,8 @@ LATEX_DIR = os.path.join(BASE_DIR, "latex_data")
 
 def fetch_raw():
     """Fetch project data from Notion and store raw JSON."""
-    notion_projects.run()
+    client = Projects()
+    client.sync()
 
 
 def select_relevant():

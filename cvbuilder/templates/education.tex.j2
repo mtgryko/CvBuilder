@@ -1,3 +1,4 @@
+{% if education %}
 \begin{sectionheader}{Education}
 {% for school in education if school.school %}
   \item \textbf{ {{ school.school | escape_latex }} } \hfill {\emph{ {{ school.dates | escape_latex }} }} \\
@@ -5,3 +6,8 @@
         {\footnotesize {{ school.details | escape_latex }}}
 {% endfor %}
 \end{sectionheader}
+{% else %}
+\begin{sectionheader}{Education}
+  \item No education information provided
+\end{sectionheader}
+{% endif %}

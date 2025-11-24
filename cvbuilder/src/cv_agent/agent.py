@@ -18,9 +18,19 @@ logger.setLevel(logging.DEBUG)
 
 
 class CVAgent:
-    def __init__(self, mode: Literal["openai", "local"] = "openai", model: str = "gpt-4"):
+    def __init__(
+        self,
+        mode: Literal["openai", "local"] = "openai",
+        model: str = "gpt-4",
+        *,
+        temperature: float = 0.2,
+        top_p: float = 0.9,
+    ):
+        """Initialize the agent with sensible defaults for deterministic output."""
         self.mode = mode
         self.model = model
+        self.temperature = temperature
+        self.top_p = top_p
         if mode == "openai":
             self.client = OpenAI()
         elif mode == "local":
@@ -71,6 +81,8 @@ class CVAgent:
             params = {
                 "model": self.model,
                 "messages": [{"role": "user", "content": prompt}],
+                "temperature": self.temperature,
+                "top_p": self.top_p,
             }
             if schema is not None:
                 params["response_format"] = {
@@ -90,7 +102,13 @@ class CVAgent:
         self, prompt: str, schema: Optional[Type[BaseModel]] = None
     ) -> str:
         url = f"{self.ollama_host}/api/generate"
-        payload = {"model": self.model, "prompt": prompt, "stream": False}
+        payload = {
+            "model": self.model,
+            "prompt": prompt,
+            "stream": False,
+            "temperature": self.temperature,
+            "top_p": self.top_p,
+        }
         if schema is not None:
             payload["format"] = schema.model_json_schema()
         else:

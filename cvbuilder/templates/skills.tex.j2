@@ -1,7 +1,5 @@
 \begin{sectionheader_nobullet}{Skills}
-\begin{itemize}[leftmargin=0em,label={},itemsep=0pt,topsep=0pt]
 {% for cat in skills %}
   \item \textbf{ {{ cat.category | escape_latex }} }: {{ cat["items"] | map('escape_latex') | join(", ") }}
 {% endfor %}
-\end{itemize}
 \end{sectionheader_nobullet}

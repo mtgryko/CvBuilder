@@ -7,11 +7,17 @@ from src.pipeline import (
     certificates as certificates_pipeline,
 )
 from src.latex import compile_latex, render_resume, save_tex
+from src.utils.logger import get_logger
+
+import subprocess
+import sys
 
 from dotenv import load_dotenv
 
 # Load env vars
 load_dotenv(".env")
+
+logger = get_logger("main")
 
 if __name__ == "__main__":
     # Build each resume section via its dedicated pipeline
@@ -25,4 +31,11 @@ if __name__ == "__main__":
     # Render + Save LaTeX + Compile
     tex = render_resume(contact, skills, projects, experience, education)
     save_tex(tex)
-    compile_latex()
+    try:
+        compile_latex()
+    except subprocess.CalledProcessError as e:
+        logger.error("LaTeX compilation failed. See logs above for details.")
+        sys.exit(e.returncode or 1)
+    except FileNotFoundError:
+        logger.error("pdflatex not found. Please ensure LaTeX is installed and in your PATH.")
+        sys.exit(1)

@@ -1,7 +1,7 @@
 """Pipeline utilities for building the skills section."""
 
 import os
-from src.notion import skills as notion_skills
+from notion.skills import generate_skills_from_projects
 from src.cv_agent.selector import CVSelector
 from src.utils.commons import load_json
 
@@ -11,7 +11,7 @@ LATEX_DIR = os.path.join(BASE_DIR, "latex_data")
 
 def fetch_raw():
     """Generate raw skills from projects data."""
-    notion_skills.generate_skills_from_projects()
+    generate_skills_from_projects()
 
 
 def select_relevant():
